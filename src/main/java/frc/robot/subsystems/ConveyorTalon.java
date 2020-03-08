@@ -80,5 +80,9 @@ public class ConveyorTalon extends SubsystemBase {
     return indexer.getSelectedSensorPosition();
   }
 
+  public TalonFX getIndexer() {
+    return indexer;
+  }
+
 
 }
