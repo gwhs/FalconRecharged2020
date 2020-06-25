@@ -64,8 +64,8 @@ public class SwerveDriveModule extends SubsystemBase {
         driveMotor.config_kI(0, 0, 0); // 0.000001
         driveMotor.config_kD(0, 0, 0); // 0.0065
 
-        driveMotor.config_kF(1, 0.0, 0); //0.0018
-        driveMotor.config_kP(1, 0.0021, 0); // 0.02 //0.001-Auto
+        driveMotor.config_kF(1, 0.0015, 0); //0.0018
+        driveMotor.config_kP(1, 0.0015, 0); // 0.02 //0.001-Auto
         driveMotor.config_kI(1, 0, 0); // 0.000001
         driveMotor.config_kD(1, 0, 0);
 

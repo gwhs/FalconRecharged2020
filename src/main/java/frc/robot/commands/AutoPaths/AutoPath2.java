@@ -8,29 +8,21 @@
 package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.commands.conveyor.ConveyorSpeed;
-import frc.robot.commands.intake.IntakeSpeed;
-import frc.robot.commands.intake.ToggleIntake;
-import frc.robot.commands.swervedrive.AutoRotate;
 import frc.robot.commands.swervedrive.Autonomous;
-import frc.robot.utility.TrajectoryMaker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoPath1 extends SequentialCommandGroup {
+public class AutoPath2 extends SequentialCommandGroup {
   /**
-   * Creates a new AutoPath1.
+   * Creates a new AutoPath2.
    */
-  public AutoPath1() {  // test forward path
-   
+  public AutoPath2() {
+    // Add your commands in the super() call, e.g.
+    // super(new FooCommand(), new BarCommand());
     super(
-      new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
-      // new AutoRotate(180),
-      // new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
+      new Autonomous(RobotContainer.getContainer().createForwardPath2().getTrajectory(), RobotContainer.getContainer().createForwardPath2().getAngle())
     );
   }
-  
 }

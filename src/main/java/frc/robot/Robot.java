@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     autoChooser = new SendableChooser<Command>();
-    m_robotContainer.getHolonomicDrivetrain().zeroGyro();
+    m_robotContainer.getHolonomicDrivetrain().zeroGyro();  //does this belong here?  Maybe in the constructor DriveTrain?
 
 
 

@@ -24,7 +24,6 @@ public class HolonomicDriveCommand extends CommandBase {
 
 	public HolonomicDriveCommand(HolonomicDrivetrain drivetrain) {
 		mDrivetrain = drivetrain;
-
 		addRequirements(drivetrain);
 		
 	}
@@ -38,7 +37,8 @@ public class HolonomicDriveCommand extends CommandBase {
 		}
 		
 		double forward = mXboxController.getY(Hand.kLeft); //real: positive
-		double rotation = mXboxController.getTriggerAxis(Hand.kLeft) - mXboxController.getTriggerAxis(Hand.kRight); //trigger values are between 0 and 1, left is -1 and right is +1
+		double rotation = mXboxController.getTriggerAxis(Hand.kLeft) 
+			- mXboxController.getTriggerAxis(Hand.kRight); //trigger values are between 0 and 1, left is -1 and right is +1
 		double strafe = mXboxController.getX(Hand.kLeft); //real: pos
 
 		forward = MathUtils.deadband(forward, mDrivetrain.isFieldOriented());

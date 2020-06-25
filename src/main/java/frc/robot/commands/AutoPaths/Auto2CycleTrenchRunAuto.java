@@ -36,11 +36,9 @@ public class Auto2CycleTrenchRunAuto extends SequentialCommandGroup {
       new Autonomous(traj.getTrajectory(), traj.getAngle()),
       new AutoShoot(),
       new Autonomous(trajTrench.getTrajectory(), trajTrench.getAngle()),
-      //need a method to rotate 180 here, either by using a Differential Drive trajectory or AutoRotate Method
-      //new AutoRotate(180),
+      new AutoRotate(175),
       new Autonomous(trajTrenchForward.getTrajectory(), trajTrenchForward.getAngle()).raceWith(new IntakeSpeed(-1)),
-      //need to rotate 180 again
-      //new AutoRotate(180),
+      new AutoRotate(175),
       new Autonomous(trajTrenchTarget.getTrajectory(), trajTrenchTarget.getAngle()),
       new AutoShoot()
     );

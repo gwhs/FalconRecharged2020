@@ -126,9 +126,9 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		SmartDashboard.putNumber("Module 2 Ticks", mSwerveModules[2].getPosition());
 		SmartDashboard.putNumber("Module 3 Ticks", mSwerveModules[3].getPosition());
 
-		double max = speeds[0];
+		double max = speeds[0];  //remove?
 
-		for (double speed : speeds) { 
+		for (double speed : speeds) {  //regular for loop is preferred here, do we use max anywhere?  -- JMH
 			if (speed > max) {
 				max = speed;
 			}
@@ -164,7 +164,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 
 		angleError = Math.min(angleError, 1);
 		angleError = Math.max(angleError, -1);
-		targetPos = (targetPos * 8.5714)/(4*Math.PI); //inches to ticks
+		targetPos = (targetPos * 8.5714)/(4*Math.PI); //inches to ticks  -- can remove this magic number?  
 		for (int i = 0; i < 4; i++) {
 				mSwerveModules[i].setTargetAngle(angle); //mSwerveModules[i].getTargetAngle());
 				mSwerveModules[i].setTargetDistance(targetPos+mSwerveModules[i].getDriveMotor().getSelectedSensorPosition());
@@ -209,7 +209,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	}
 
 	@Override 
-	public void periodic() {
+	public void periodic() { //is this needed here?
 		SmartDashboard.putBoolean("Mod 0 Motor Inversion", mSwerveModules[0].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());

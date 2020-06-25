@@ -16,7 +16,7 @@ public class AutoRotate extends CommandBase {
    * Creates a new AutoRotate.
    */
   private double angle;
-  private double initAngle;
+  private double initAngle;  // do these need to instance variables?
   private double currAngle;
   private double targetAngle;
 
@@ -37,7 +37,7 @@ public class AutoRotate extends CommandBase {
   @Override
   public void execute() {
     currAngle = RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle();
-    RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, 0, Math.signum(angle)*-.2);
+    RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, 0, Math.signum(angle)*-.2); //forward, strafe, rotation, why -.2
     SmartDashboard.putNumber("init angle", initAngle);
     SmartDashboard.putNumber("curr angle", (currAngle));
     SmartDashboard.putNumber("target angle", (targetAngle));

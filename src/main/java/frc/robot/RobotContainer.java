@@ -18,8 +18,11 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoPaths.Auto2CycleTrenchRunAuto;
 import frc.robot.commands.AutoPaths.AutoPath1;
+import frc.robot.commands.AutoPaths.AutoPath2;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
@@ -35,6 +38,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+
 //import sun.java2d.cmm.ColorTransform;
 import frc.robot.utility.TrajectoryMaker;
 
@@ -159,15 +163,22 @@ public class RobotContainer {
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
     
-    //buttonX.whileHeld(new IntakeSpeed(-0.8));
-    //buttonA.whenPressed(new ToggleIntake());
-    //buttonY.whileHeld(new ConveyorSpeed(.5));
-    //buttonB.whileHeld(new IntakeSpeed(.5));
-   // leftBumper.whileHeld(new ConveyorSpeed(-.7));
-    //rightBumper.whileHeld(new SetShooterSpeed());
+    buttonX.whileHeld(new IntakeSpeed(-0.8));
+    //buttonA.whenPressed(new ToggleIntake());  //testing inline
+    /*new JoystickButton(m_driverController, Button.kB.value)
+        .whenPressed(new InstantCommand(m_hatchSubsystem::releaseHatch, m_hatchSubsystem));*/
+    buttonA.whenPressed(new InstantCommand(intake::toggleIntakeSolenoidMode, intake));
+
+    buttonY.whileHeld(new ConveyorSpeed(.5));
+    buttonB.whileHeld(new IntakeSpeed(.5));
+    leftBumper.whileHeld(new ConveyorSpeed(-.7));
+    rightBumper.whileHeld(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
-    //start.whenPressed(new AutoShoot());
-    buttonX.whenPressed(new AutoPath1());
+    start.whenPressed(new AutoShoot());
+    //buttonX.whenPressed(new AutoPath1());
+    //buttonA.whenPressed(new AutoPath2());
+    //buttonB.whenPressed(new Auto2CycleTrenchRunAuto());
+    //buttonY.whenPressed(new AutoRotate(173));
     
 
     // buttonA_2.whenPressed(new ToggleIgnore());
@@ -186,34 +197,40 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    //How can we change this to select the auto routine from the dashboard?
     return new AutoPath1();
 
   }
 
+  // Need better documentation here.  What are these doing?
   public TrajectoryMaker createfrontScorePath() 
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
   }
   public TrajectoryMaker createTrenchToTargetDiagonal() 
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(8, -1.6, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, -0.25, new Rotation2d(0)), true);//8,-1.6
   }
   public TrajectoryMaker createTargetToFrontOfTrench() 
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.2, 1.6, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-0.25, 0.25, new Rotation2d(0)), true);// -4.2,1.6
   }
   public TrajectoryMaker createTrenchForward() //Assuming facing forward
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, 0, new Rotation2d(0)), true);//2
   }
   
   public TrajectoryMaker createForwardPath() //For Testing Purposes
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), true);
   }
+  public TrajectoryMaker createForwardPath2() //For Testing Purposes
+  {
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
+  }
   public TrajectoryMaker createToPortPath() //For Testing Purposes
   {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
+    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, 0, new Rotation2d(0)), true);//3
   }
 
   public TrajectoryMaker createPortToFrontofTrench()
