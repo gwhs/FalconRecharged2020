@@ -27,7 +27,7 @@ public class Intake extends SubsystemBase {
     intakeController = new CANSparkMax(Constants.INTAKE_SPARK, MotorType.kBrushless);
     rightSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID, Constants.INTAKEREVERSE_SOLENOID);
     leftSolenoid = new DoubleSolenoid(Constants.INTAKEFORWARD_SOLENOID2, Constants.INTAKEREVERSE_SOLENOID2);
-    leftSolenoid.set(DoubleSolenoid.Value.kReverse);
+    leftSolenoid.set(DoubleSolenoid.Value.kReverse);  //start the intake in the up position
     rightSolenoid.set(DoubleSolenoid.Value.kReverse);
 
   }

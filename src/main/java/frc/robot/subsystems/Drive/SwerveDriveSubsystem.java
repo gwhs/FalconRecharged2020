@@ -66,6 +66,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		return (mNavX.getAngle() - getAdjustmentAngle());
 	}
 
+	public double getGyroAngle2() {
+		return (-mNavX.getAngle());
+	}
+
 	public double getGyroRate() {
 		return mNavX.getRate();
 	}

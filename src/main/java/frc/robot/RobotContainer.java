@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.Auto2CycleTrenchRunAuto;
 import frc.robot.commands.AutoPaths.AutoPath1;
@@ -55,7 +56,7 @@ public class RobotContainer {
 
   private final Command m_autoCommand = null;
   private XboxController mXboxController;
-  private XboxController mXboxController2;
+  private XboxController mXboxController2;  //operator controller
   private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSpinner colorPanelSpinner;
@@ -163,18 +164,27 @@ public class RobotContainer {
     JoystickButton rightBumper_2 = new JoystickButton(mXboxController2, XboxController.Button.kBumperRight.value);
     
     
-    buttonX.whileHeld(new IntakeSpeed(-0.8));
+    //buttonX.whileHeld(new IntakeSpeed(-0.8));
     //buttonA.whenPressed(new ToggleIntake());  //testing inline
     /*new JoystickButton(m_driverController, Button.kB.value)
         .whenPressed(new InstantCommand(m_hatchSubsystem::releaseHatch, m_hatchSubsystem));*/
+    /*
+    The following is an example of an inline command.  No need to create a CommandBase Subclass for simple commands
+    */
     buttonA.whenPressed(new InstantCommand(intake::toggleIntakeSolenoidMode, intake));
 
     buttonY.whileHeld(new ConveyorSpeed(.5));
     buttonB.whileHeld(new IntakeSpeed(.5));
     leftBumper.whileHeld(new ConveyorSpeed(-.7));
-    rightBumper.whileHeld(new SetShooterSpeed());
+    rightBumper.whenPressed(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
-    start.whenPressed(new AutoShoot());
+    //start.whenPressed(new AutoShoot());
+
+    //start.whenPressed(new AutoRotate(45));
+
+    start.whenPressed(new TurnToAngleProfiled(45, swerveDriveSubsystem));
+    buttonX.whenPressed(new TurnToAngle(45, swerveDriveSubsystem));
+    //start.whenPressed(new InstantCommand(swerveDriveSubsystem::holonomicDrive(0.0,0.0,45.0), swerveDriveSubsystem));
     //buttonX.whenPressed(new AutoPath1());
     //buttonA.whenPressed(new AutoPath2());
     //buttonB.whenPressed(new Auto2CycleTrenchRunAuto());
