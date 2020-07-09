@@ -16,6 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.swervedrive.SwerveModuleCommand;
 import frc.robot.commands.swervedrive.Autonomous;
@@ -182,7 +183,7 @@ public class SwerveDriveModule extends SubsystemBase {
     }
 
     public double encoderTicksToInches(final double ticks) {
-        return ticks / 35.6;
+        return ticks / Constants.TICKS_PER_INCH;  
     }
 
     public double getPosition() {

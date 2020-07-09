@@ -15,45 +15,42 @@ import frc.robot.Constants;
 /**
  * A command that will turn the robot to the specified angle.
  */
-public class TurnToAngleProfiled extends ProfiledPIDCommand {
+public class GoToDistance extends ProfiledPIDCommand {
     /**
-     * Turns to robot to the specified angle.
+     * Goes a specific distance.
      *
-     * @param targetAngleDegrees The angle to turn to
+     * @param distance in inches 
      * @param drive              The drive subsystem to use
      */
 
-     TrapezoidProfile.Constraints rampUpDown = new TrapezoidProfile.Constraints(10,5);
-     
-
-    public TurnToAngleProfiled(double targetAngleDegrees, SwerveDriveSubsystem drive) {
+    public GoToDistance(double distance, SwerveDriveSubsystem drive) {
     super(
-        new ProfiledPIDController(Constants.anglePIDp,Constants.anglePIDi, Constants.anglePIDd, //need to tune this better
-            new TrapezoidProfile.Constraints(Constants.maxAngleVelocity,Constants.maxAngleAcceleration)),  
-        
-        // Close loop on heading
-        drive::getGyroAngle2,
+        new ProfiledPIDController(0.04,0.0, 0.00237, //need to tune this better
+            new TrapezoidProfile.Constraints(60,120)),  
+        // Close loop on distance
+        drive::getInches ,
         // Set reference to target
-        targetAngleDegrees,  
-        // Pipe output to turn branchrobot
-        (output,setpoint) -> drive.holonomicDrive(0, 0, output),
+        distance,  
+        // Pipe output to drive robot
+        (output,setpoint) -> drive.holonomicDrive(output, 0, 0),
         // Require the drive
         drive);
 
     // Set the controller to be continuous (because it is an angle controller)
-    getController().enableContinuousInput(-180, 180);
+    //getController().enableContinuousInput(-180, 180);
+    //drive.resetAllEncoders();
     
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
-    getController().setTolerance(Constants.turnTolerance, 10);
+    getController().setTolerance(6, 10);
   }
 
   
   public void execute() {
     // TODO Auto-generated method stub
     super.execute();
-    System.out.println("angle: " 
-        + RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle2());
+    System.out.println("distance: " 
+        + RobotContainer.getContainer().getHolonomicDrivetrain().getInches());
   }
   @Override
   public boolean isFinished() {

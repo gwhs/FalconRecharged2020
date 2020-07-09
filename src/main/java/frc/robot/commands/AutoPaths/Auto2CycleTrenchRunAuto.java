@@ -34,13 +34,13 @@ public class Auto2CycleTrenchRunAuto extends SequentialCommandGroup {
     TrajectoryMaker trajTrenchTarget = RobotContainer.getContainer().createTrenchToTargetDiagonal();
     addCommands(
       new Autonomous(traj.getTrajectory(), traj.getAngle()),
-      new AutoShoot(),
+      new AutoShoot(false),
       new Autonomous(trajTrench.getTrajectory(), trajTrench.getAngle()),
       new AutoRotate(175),
       new Autonomous(trajTrenchForward.getTrajectory(), trajTrenchForward.getAngle()).raceWith(new IntakeSpeed(-1)),
       new AutoRotate(175),
       new Autonomous(trajTrenchTarget.getTrajectory(), trajTrenchTarget.getAngle()),
-      new AutoShoot()
+      new AutoShoot(true)
     );
   }
 }

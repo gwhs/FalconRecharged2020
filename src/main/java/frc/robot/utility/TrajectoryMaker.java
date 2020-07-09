@@ -26,7 +26,7 @@ public class TrajectoryMaker {
 private Pose2d start;
 private Pose2d end;
 private double angle;
-private boolean isHyp;
+private boolean isHyp;  //what does this mean?
 private TrajectoryConfig config;
 private Trajectory trajectory;
 private ArrayList<Translation2d> listOfPoints;
@@ -36,7 +36,7 @@ public TrajectoryMaker(Pose2d start, Pose2d end, boolean isHyp) {
     this.end = end;
     this.isHyp = isHyp;
     angle = 0;
-    config = new TrajectoryConfig(4, 2);
+    config = new TrajectoryConfig(4, 2);  //make into constants
     config.setStartVelocity(0);
     config.setEndVelocity(0);
     config.setReversed(false);

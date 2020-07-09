@@ -67,7 +67,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	}
 
 	public double getGyroAngle2() {
-		return (-mNavX.getAngle());
+		return (-getGyroAngle());
 	}
 
 	public double getGyroRate() {
@@ -163,12 +163,17 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		}
 	}
 
+	public double getInches()
+	{
+		return mSwerveModules[0].getInches();
+	}
+
 	public void driveForwardDistance(double targetPos, double angle){ // inches & degrees
 		double angleError = ((angle - mNavX.getYaw()) / 180)*10;
 
 		angleError = Math.min(angleError, 1);
 		angleError = Math.max(angleError, -1);
-		targetPos = (targetPos * 8.5714)/(4*Math.PI); //inches to ticks  -- can remove this magic number?  
+		targetPos = (targetPos * Constants.GEAR_RATIO)/(Constants.WHEEL_SIZE*Math.PI); //inches to ticks  -- can remove this magic number?  
 		for (int i = 0; i < 4; i++) {
 				mSwerveModules[i].setTargetAngle(angle); //mSwerveModules[i].getTargetAngle());
 				mSwerveModules[i].setTargetDistance(targetPos+mSwerveModules[i].getDriveMotor().getSelectedSensorPosition());

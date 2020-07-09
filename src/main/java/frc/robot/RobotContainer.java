@@ -178,13 +178,15 @@ public class RobotContainer {
     leftBumper.whileHeld(new ConveyorSpeed(-.7));
     rightBumper.whenPressed(new SetShooterSpeed());
     back.whileHeld(new ZeroNavX());
-    //start.whenPressed(new AutoShoot());
+    start.whenPressed(new AutoShoot(false));
 
     //start.whenPressed(new AutoRotate(45));
 
-    start.whenPressed(new TurnToAngleProfiled(45, swerveDriveSubsystem));
-    buttonX.whenPressed(new TurnToAngle(45, swerveDriveSubsystem));
-    //start.whenPressed(new InstantCommand(swerveDriveSubsystem::holonomicDrive(0.0,0.0,45.0), swerveDriveSubsystem));
+    double angleToGo = 45;
+
+    //start.whenPressed(new TurnToAngleProfiled(angleToGo, swerveDriveSubsystem));
+    //buttonX.whenPressed(new GoToDistance(72, swerveDriveSubsystem));
+    
     //buttonX.whenPressed(new AutoPath1());
     //buttonA.whenPressed(new AutoPath2());
     //buttonB.whenPressed(new Auto2CycleTrenchRunAuto());
@@ -212,7 +214,7 @@ public class RobotContainer {
 
   }
 
-  // Need better documentation here.  What are these doing?
+  // Need better documentation here.  What are these doing?  Are the units in meters?
   public TrajectoryMaker createfrontScorePath() 
   {
     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);

@@ -19,6 +19,7 @@ public class ZeroNavX extends InstantCommand {
   @Override
   public void initialize() {
     RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
+    RobotContainer.getContainer().getHolonomicDrivetrain().resetAllEncoders();
   }
 
 }

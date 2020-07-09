@@ -33,6 +33,19 @@ public class SetShooterSpeed extends CommandBase {
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
     SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
     shooter = RobotContainer.getContainer().getShooterMotor();
+    this.speed = -6000;
+    addRequirements(shooter);
+  }
+
+  public SetShooterSpeed(double rpm) {    
+    SmartDashboard.putNumber("Current Shooter RPM", 0);
+    SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3600));
+    SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0.04928));
+    SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
+    SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
+    SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
+    shooter = RobotContainer.getContainer().getShooterMotor();
+    this.speed = rpm;
     addRequirements(shooter);
   }
 
@@ -40,15 +53,17 @@ public class SetShooterSpeed extends CommandBase {
   @Override
   public void initialize() {
 
-    shooter.setSpeed(-speed);
+    shooter.setSpeed(-this.speed);
+    
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3600);
-      shooter.setSpeed(-speed);
+      //this.speed = SmartDashboard.getNumber("Input Shooter RPM", 3600);
+      //shooter.setSpeed(-speed);
+      shooter.setSpeed(-this.speed);
       this.pidF = SmartDashboard.getNumber("Input pidF", 0);
       this.pidP = SmartDashboard.getNumber("Input pidP", 0);
       this.pidI = SmartDashboard.getNumber("Input pidI", 0);

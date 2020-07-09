@@ -25,7 +25,7 @@ public class AutoLineToAutoScore extends SequentialCommandGroup {
     TrajectoryMaker trajMaker = RobotContainer.getContainer().createToPortPath();
     addCommands(
       new Autonomous(trajMaker.getTrajectory(), trajMaker.getAngle()),
-      new AutoShoot() // Assuming Auto Shoot Ends
+      new AutoShoot(false) // Assuming Auto Shoot Ends
     );
   }
 }

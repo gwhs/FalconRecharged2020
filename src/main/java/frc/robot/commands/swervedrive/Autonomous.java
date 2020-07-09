@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+import frc.robot.Constants;
+
 
 public class Autonomous extends CommandBase {
   /**
@@ -43,7 +45,7 @@ public class Autonomous extends CommandBase {
   public static final double SPEEDCONSTANT = (2*Math.PI*(1.0/6)*0.3048)/19251; //used to swtich from ticks to meters
   public double initPos[];
 
-  public Autonomous(Trajectory trajectory, double angle) {
+  public Autonomous(Trajectory trajectory, double angle) {  //what is the angle parameter here?
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = RobotContainer.getContainer().getHolonomicDrivetrain();
     this.trajectory = trajectory;
@@ -57,33 +59,36 @@ public class Autonomous extends CommandBase {
   @Override
   public void initialize() {
     controller = new RamseteController(2.5, 1);
+
+     
+
     if(Math.abs(angle) <=45) {
       kinematics = new SwerveDriveKinematics(
-      new Translation2d(0.28575, 0.28575), //(+,+)
-      new Translation2d(0.28575, -0.28575), //(+,-)
-      new Translation2d(-0.28575, -0.28575), //(-,-)
-      new Translation2d(-0.28575, 0.28575)); //(-,+)\
+      new Translation2d(Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(+,+)
+      new Translation2d(Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(+,-)
+      new Translation2d(-Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(-,-)
+      new Translation2d(-Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER)); //(-,+)\
     }
     else if(Math.abs(angle - 180) <= 45)  {
       kinematics = new SwerveDriveKinematics(
-      new Translation2d(-0.28575, -0.28575), //(+,+)
-      new Translation2d(-0.28575, 0.28575), //(+,-)
-      new Translation2d(0.28575, 0.28575), //(-,-)
-      new Translation2d(0.28575, -0.28575));
+      new Translation2d(-Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(+,+)
+      new Translation2d(-Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(+,-)
+      new Translation2d(Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(-,-)
+      new Translation2d(Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER));
     }
     else if(Math.abs(angle - 90) <= 45)  {
       kinematics = new SwerveDriveKinematics(
-      new Translation2d(0.28575, -0.28575), //(+,+)
-      new Translation2d(-0.28575, -0.28575), //(+,-)
-      new Translation2d(-0.28575, 0.28575), //(-,-)
-      new Translation2d(0.28575, 0.28575));
+      new Translation2d(Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(+,+)
+      new Translation2d(-Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(+,-)
+      new Translation2d(-Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(-,-)
+      new Translation2d(Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER));
     }
     else if(Math.abs(angle-270) <= 45) {
       kinematics = new SwerveDriveKinematics(
-      new Translation2d(-0.28575, 0.28575), //(+,+)
-      new Translation2d(0.28575, 0.28575), //(+,-)
-      new Translation2d(0.28575, -0.28575), //(-,-)
-      new Translation2d(-0.28575, -0.28575));
+      new Translation2d(-Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(+,+)
+      new Translation2d(Constants.MOD_TO_CENTER, Constants.MOD_TO_CENTER), //(+,-)
+      new Translation2d(Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER), //(-,-)
+      new Translation2d(-Constants.MOD_TO_CENTER, -Constants.MOD_TO_CENTER));
     }
     odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
     odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
@@ -94,7 +99,7 @@ public class Autonomous extends CommandBase {
     drivetrain.swapDrivePIDSlot(1);
     drivetrain.getSwerveModule(0).setTargetAngle(angle);
     drivetrain.getSwerveModule(1).setTargetAngle(angle);
-    drivetrain.getSwerveModule(2).setTargetAngle(180+angle);
+    drivetrain.getSwerveModule(2).setTargetAngle(180+angle);  //what is up with this module?
     drivetrain.getSwerveModule(3).setTargetAngle(angle);
     drivetrain.getSwerveModule(0).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(1).getDriveMotor().setInverted(true);
@@ -126,6 +131,9 @@ public class Autonomous extends CommandBase {
     SmartDashboard.putString("current Goal", goal.poseMeters.toString());
     ChassisSpeeds adjustedSpeeds = controller.calculate(odometry.getPoseMeters(), goal);
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(adjustedSpeeds);
+
+    //Instead of this, just pass the state to each module?
+
     drivetrain.getSwerveModule(0).setMeterSpeed(moduleStates[0].speedMetersPerSecond);
     drivetrain.getSwerveModule(0).setTargetAngle(moduleStates[0].angle.getDegrees()+initPos[0]);
     drivetrain.getSwerveModule(1).setMeterSpeed(moduleStates[1].speedMetersPerSecond);
