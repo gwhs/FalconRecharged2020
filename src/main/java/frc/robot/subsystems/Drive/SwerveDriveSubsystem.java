@@ -35,14 +35,28 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	 * 2 is Back Left
 	 * 3 is Back Right
 	 */
-	private SwerveDriveModule[] mSwerveModules = new SwerveDriveModule[] {                            
-		m0,m1,m2,m3
-	};
+	private SwerveDriveModule[] mSwerveModules = new SwerveDriveModule[4];
 
 	public AHRS mNavX = new AHRS(SPI.Port.kMXP, (byte) 200);
 
-	public SwerveDriveSubsystem() { // add PID controll stuff for Drive Motors
-		zeroGyro(); 
+	public SwerveDriveSubsystem() {
+		initModules(this.m0, this.m1, this.m2, this.m3);
+	}
+
+	public SwerveDriveSubsystem(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { // add PID controll stuff for Drive Motors
+		initModules(m0, m1, m2, m3);
+	}
+
+	private void initModules(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { // add PID controll stuff for Drive Motors
+		mSwerveModules[0] = m0;
+		mSwerveModules[1] = m1;
+		mSwerveModules[2] = m2;
+		mSwerveModules[3] = m3;
+		this.m0 = m0;
+		this.m1 = m1;
+		this.m2 = m2;
+		this.m3 = m3;
+		zeroGyro();
 
 		// mSwerveModules[0].getDriveMotor().setInverted(InvertType.InvertMotorOutput); //real: false
 		//mSwerveModules[2].getDriveMotor().setInverted(true); //
