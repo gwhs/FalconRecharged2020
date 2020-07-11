@@ -23,8 +23,15 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private DaphneOneContainer m_daphneOneContainer;
+
   private SendableChooser<Command> autoChooser;
-  
+
+  public static final String DAPHNE1 = "daphne1";
+  public static final String DAPHNE2 = "daphne2";
+  public static final String TESTBED = "testbed";
+
+  private static final String ROBOT_TYPE = DAPHNE1;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,10 +41,20 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    switch(ROBOT_TYPE) {
+      case DAPHNE1:
+        m_daphneOneContainer = new DaphneOneContainer();
+//        m_daphneOneContainer.getLimelight().setCamMode();   // not sure what this did in master branch
+        break;
+      case DAPHNE2:
+        m_robotContainer = new RobotContainer();
+        break;
+      case TESTBED:
+      default:
+        // TODO: add testbed robot container
+        break;
+    }
     autoChooser = new SendableChooser<Command>();
-    m_robotContainer.getHolonomicDrivetrain().zeroGyro();  //does this belong here?  Maybe in the constructor DriveTrain?
-
 
 
     // autoChooser.addOption("Move Forward 1", new Autonomous(m_robotContainer.createAutonomousPath()));

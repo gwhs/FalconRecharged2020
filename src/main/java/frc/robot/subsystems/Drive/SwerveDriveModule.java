@@ -45,6 +45,7 @@ public class SwerveDriveModule extends SubsystemBase {
 
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         angleMotor.setSensorPhase(true);
+
         angleMotor.config_kP(0, 19.0, 0);   // 20.2
         angleMotor.config_kI(0, 0.04, 0);  //0.001
         angleMotor.config_kD(0, 60, 0);     //60
@@ -84,6 +85,57 @@ public class SwerveDriveModule extends SubsystemBase {
         setDefaultCommand(new SwerveModuleCommand(this));
 
     }
+    /*
+    Daphne one values
+        public SwerveDriveModule(int moduleNumber, TalonSRX angleMotor, TalonFX driveMotor, double zeroOffset) {
+        mModuleNumber = moduleNumber;
+
+        mAngleMotor = angleMotor;
+        mDriveMotor = driveMotor;
+        mZeroOffset = zeroOffset;
+        mDriveMotor.setSelectedSensorPosition(0);
+
+        angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
+        angleMotor.setSensorPhase(true);
+        angleMotor.config_kP(0, 19, 0);
+        angleMotor.config_kI(0, 0.04, 0);
+        angleMotor.config_kD(0, 60, 0);
+
+        angleMotor.config_kP(1, 19, 0);
+        angleMotor.config_kI(1, 0.04, 0);
+        angleMotor.config_kD(1, 60, 0);
+
+        angleMotor.setNeutralMode(NeutralMode.Brake);
+        angleMotor.set(ControlMode.Position, 0);
+        angleMotor.configNeutralDeadband(0.07);
+        driveMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0); // ADD TO CANSPARKMAX LATER***
+
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+        driveMotor.config_kF(0, 0.0018, 0); //0.0018
+        driveMotor.config_kP(0, 0.001, 0); // 0.02 //0.001-Auto
+        driveMotor.config_kI(0, 0, 0); // 0.000001
+        driveMotor.config_kD(0, 0, 0); // 0.0065
+
+        driveMotor.config_kF(1, 0.0, 0); //0.0018
+        driveMotor.config_kP(1, 0.0019, 0); // 0.02 //0.001-Auto
+        driveMotor.config_kI(1, 0, 0); // 0.000001
+        driveMotor.config_kD(1, 0, 0);
+
+        // Set amperage limits
+        angleMotor.configContinuousCurrentLimit(30, 0);
+        angleMotor.configPeakCurrentLimit(30, 0);
+        angleMotor.configPeakCurrentDuration(100, 0);
+        angleMotor.enableCurrentLimit(true);
+
+        // driveMotor.setSmartCurrentLimit(15); No clue how to set Current Limit...
+        // driveMotor.setSecondaryCurrentLimit(15, 0); //config`SupplyCurrentLimit
+        // (SupplyCurrentLimitConfiguration currLimitCfg, int timeoutMs)?
+        // driveMotor.enableCurrentLimit(true); try using pheonix tuner
+
+        setDefaultCommand(new SwerveModuleCommand(this));
+
+    }
+     */
 
     @Override
     public void periodic() {

@@ -1,0 +1,39 @@
+It may be that some of the below branches have local changes on various laptops.
+Would ask students if they know of any changes
+
+
+
+Branch information:
+Autonomous
+- delete, no changes in
+
+Music
+- for the music player ability, just because I want our climb to include Star Wars music while hanging there.
+- updates to vendordeps with updated driver version
+- copy over the sound files
+- disable the music by default
+
+
+ShooterSubsystemSparkMax
+- based off of ShooterSubsystem, don't try merging with master at all
+- Only has changes in Limelight, not sure which is correct, ask Riley or other students
+- some changes were made in both sides of the branch, but will likely be substantially revised after JH plays with system more
+- Limelight mostly seems outdated, as compared with changers in ShooterSubsystem
+- Likely to delete
+
+master
+- consider if we should rename this in FalconRecharged2021.  Computer Science terminology has lots of terminology that harkens back to the bad days
+- words like master, slave, blacklist, whitelist are too loaded for today, and should be changed ( e.g. leader / follower )
+
+- useful Constants - consider renaming to DaphneOneConstants for now
+- Copy RobotContainer to DaphneOneContainer
+- SwerveDriveModule, SwerveDriveSubsystem: preserve daphne 1 / 2 constants, add if to pick one or other
+
+- Discard command changes like AutoDiagonal, and others
+
+- various of Autonomous changes likely not worth recovering, can be rediscovered what is different for Different bots
+
+-  commands to save? AutoDumpAndPickup, all control panel commands (then delete some that don't seem useful)
+
+ShooterSubsystem
+- Prefer code from ShooterSubsystem in general

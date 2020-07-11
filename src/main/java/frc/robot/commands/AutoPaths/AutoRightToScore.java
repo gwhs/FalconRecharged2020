@@ -8,32 +8,25 @@
 package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.DaphneOneContainer;
 import frc.robot.RobotContainer;
 import frc.robot.commands.conveyor.ConveyorSpeed;
-import frc.robot.commands.intake.IntakeSpeed;
-import frc.robot.commands.intake.ToggleIntake;
 import frc.robot.commands.swervedrive.Autonomous;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutoScoreFrontToTrench extends SequentialCommandGroup {
+public class AutoRightToScore extends SequentialCommandGroup {
   /**
-   * Creates a new AutoScoreFrontToTrench.
+   * Creates a new AutoDelayToScore.
    */
-  public AutoScoreFrontToTrench() {
-    super();
+  public AutoRightToScore() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    // super(new Autonomous(RobotContainer.getContainer().createfrontScorePath().getTrajectory(), RobotContainer.getContainer().createfrontScorePath().getAngle()), 
-    //       new ConveyorSpeed(-1).withTimeout(1.5), 
-    //       new Autonomous(RobotContainer.getContainer().createPortToFrontofTrench().getTrajectory(), 0.0),
-    //       new ToggleIntake(),
-    //       new IntakeSpeed(-0.8).raceWith(new Autonomous(RobotContainer.getContainer().createMoveDownTrench().getTrajectory(), RobotContainer.getContainer().createMoveDownTrench().getAngle()))
-
-
-
-
-
+    super(//new WaitCommand(10),
+          new Autonomous(DaphneOneContainer.getContainer().createSidePath().getTrajectory(), DaphneOneContainer.getContainer().createSidePath().getAngle()),
+          new Autonomous(DaphneOneContainer.getContainer().createForwardPath().getTrajectory(), DaphneOneContainer.getContainer().createForwardPath().getAngle()),
+          new ConveyorSpeed(-1).withTimeout(2));
   }
 }

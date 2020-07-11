@@ -49,7 +49,9 @@ public final class Constants {
     public static final double WHEEL_SIZE = 3.838;
 
     public static final double TICKS_PER_INCH = (2048*GEAR_RATIO)/(WHEEL_SIZE*Math.PI);
-    public static boolean forward = true;  
+    public static boolean forward = true;
+    public static final double SPINNER_POSITION_PERCENT = .6;
+    public static final double SPINNER_SPEED = 0.2; //only being used in SpinToMid right now
 
     public static final double MOD_TO_CENTER = 0.28575; // distance in meter from center point to each swerve module
 

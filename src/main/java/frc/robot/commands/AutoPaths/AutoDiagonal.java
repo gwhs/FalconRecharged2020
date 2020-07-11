@@ -5,21 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.controlpanel;
+package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.DaphneOneContainer;
+import frc.robot.commands.swervedrive.Autonomous;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SpinToMidColor extends SequentialCommandGroup {
+public class AutoDiagonal extends SequentialCommandGroup {
   /**
-   * Creates a new SpinToMidColor.
+   * Creates a new AutoDiagonal.
    */
-  public SpinToMidColor() { //viv bday = 3/6
+  public AutoDiagonal() {
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    // super(new SpinToColor(data));
-    super(new SpinToColor(), new SpinToMid());
+    super(
+      new Autonomous(DaphneOneContainer.getContainer().createDiagonalPath().getTrajectory(), DaphneOneContainer.getContainer().createDiagonalPath().getAngle())
+    );
   }
 }

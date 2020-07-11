@@ -49,7 +49,7 @@ public TrajectoryMaker(Pose2d start, Pose2d end, ArrayList<Translation2d> points
     this.end = end;
     this.isHyp = false;
     angle = 0;
-    config = new TrajectoryConfig(2, 1);
+    config = new TrajectoryConfig(0.5, 0.5);
     config.setStartVelocity(0);
     config.setEndVelocity(0);
     config.setReversed(false);
@@ -61,8 +61,10 @@ public TrajectoryMaker(Pose2d start, Pose2d end, ArrayList<Translation2d> points
 
 private Trajectory createTrajectory()
 {
+    SmartDashboard.putBoolean("isHyp", isHyp);
     if(isHyp) 
     {   
+
         double x_Dis = end.getTranslation().getX() - start.getTranslation().getX();
         double y_Dis = end.getTranslation().getY() - start.getTranslation().getY();
         double distance = start.getTranslation().getDistance(end.getTranslation());

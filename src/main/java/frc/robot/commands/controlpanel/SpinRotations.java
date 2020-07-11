@@ -7,35 +7,33 @@
 //Spins the wheel that spins the color panel
 package frc.robot.commands.controlpanel;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.RobotContainer;
 import frc.robot.Constants;
 
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SpinToColor extends CommandBase {
-    
+public class SpinRotations extends CommandBase {
     private String startColor;
     private int colorCount;
     private String previousColor;
-    private String targetColor;
+    private String expectedColor;
     private String currentColor;
-    private String[] targetColorArray;
+    private String[] expectedColorArray;
     private int arraySize;
     private int prevIndex;
     private Map<String,Integer> colorDictionary;
-    private String gameData;
     private String color;
-
-    private Map<String, String> impossible;
+    private ArrayList<String> colorList = new ArrayList<String>();
     
-    public SpinToColor() {
+    private Map<String, String> impossible;
+
+    public SpinRotations() {
         addRequirements(RobotContainer.getContainer().getColorSensor());   
         addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
-        //gameData = data;
         impossible = new HashMap<String, String>();
         impossible.put("Yellow", "Green");
         impossible.put("Green", "Yellow");
@@ -46,12 +44,10 @@ public class SpinToColor extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+        RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+        expectedColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
+        arraySize = expectedColorArray.length;
 
-        color = RobotContainer.getContainer().getColorSensor().getColor();
-        gameData =  DriverStation.getInstance().getGameSpecificMessage();
-        targetColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
-        arraySize = targetColorArray.length;
-     
         //Mapping colors to index numbers
         colorDictionary = new HashMap<String, Integer>();
         colorDictionary.put("Yellow", Integer.valueOf(0));
@@ -59,40 +55,28 @@ public class SpinToColor extends CommandBase {
         colorDictionary.put("Green", Integer.valueOf(2));
         colorDictionary.put("Blue", Integer.valueOf(3));
 
-
-
-        startColor = color;
+        color = RobotContainer.getContainer().getColorSensor().getColor();
+        startColor = "Blue"; //to get rid of green/yellow error
         currentColor = color;
+        colorCount = -1;
+        
+        // int prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        // previousColor = expectedColorArray[prevIndex]; 
+        // expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
+
+
+        //{"Yellow", "Red", "Green", "Blue"}
 
         if(Constants.forward) {
-            prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
+        previousColor = expectedColorArray[prevIndex]; 
+        expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];
         }
         else {
-            prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+        prevIndex = (colorDictionary.get(startColor) + 1) % arraySize;
+        previousColor = expectedColorArray[prevIndex];
+        expectedColor = expectedColorArray[(colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1];
         }
-        previousColor = targetColorArray[prevIndex]; 
-
-        if(gameData.length()>0){//sets target color based on game data(stage 3 control panel color)
-
-            if(gameData.toUpperCase().charAt(0) == 'G'){
-                targetColor = "Yellow";
-            }
-            else if(gameData.toUpperCase().charAt(0) == 'B'){
-                targetColor = "Red";
-            }
-            else if(gameData.toUpperCase().charAt(0) == 'Y'){
-                targetColor = "Green";
-            }
-            else if(gameData.toUpperCase().charAt(0) == 'R'){
-                targetColor = "Blue";
-            }
-            else{
-                targetColor = "Unknown";
-            }
-        }   
-        
-  
-        
     }
 
     //If we see an impossible color, we don't change currentColor
@@ -106,37 +90,52 @@ public class SpinToColor extends CommandBase {
         }
     }
 
+    /**
+     * if start on red/green, count reds
+     * if start on blue/yellow, count blues
+     * saves time on 3/8 of a rotation if start on red
+     */
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-  
-        RobotContainer.getContainer().getColorPanelSpinner().spin(0.2); //change the speed
+        System.out.println("exec");
+        
+
+        RobotContainer.getContainer().getColorPanelSpinner().spin(.70); //change the speed
+
+        //handling switch between yellow and blue
         //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
         updateColor();
 
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);
         SmartDashboard.putNumber("colorCount", colorCount);
-        SmartDashboard.putString("targetColor", targetColor);
-
-
-        previousColor = currentColor;
+        SmartDashboard.putString("expectedColor", expectedColor);
+        SmartDashboard.putString("startColor", startColor);
     
+        if (currentColor.equals(startColor) && !currentColor.equals(previousColor)) {
+            colorCount ++;
+            colorList.add(RobotContainer.getContainer().getColorSensor().getColor());
+        }
+        previousColor = currentColor;
+        expectedColor =  expectedColorArray[(colorDictionary.get(currentColor) + 1) % 4];
+        RobotContainer.getContainer().getColorPanelSpinner().printPosition();
     }
 
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        return currentColor.equals(targetColor);
-
-        
+        //6 is 4 rotations, each +1 is 1/2 rotation
+        return colorCount > 4;
     }
 
     // Called once after isFinished returns true
     @Override
     public void end(final boolean interrupted) {
-
+        System.out.println(colorList);
         RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+        colorCount = -1;
     }
 }
