@@ -12,9 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.AutoPath1;
@@ -36,9 +33,6 @@ import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-import frc.robot.utility.TrajectoryMaker;
-
-import java.util.ArrayList;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -184,10 +178,6 @@ public class DaphneOneContainer {
     buttonLB_2.whenPressed(new SpinToColor());
     buttonBack_2.whenPressed(new SpinToMidColor()); //may b
     // buttonStart_2.
-
-
-
-    
   }
 
   /**
@@ -201,65 +191,5 @@ public class DaphneOneContainer {
 
   }
 
-  public TrajectoryMaker createSidePath() //Test Path
-  {
-    //return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2.77, 0.2, new Rotation2d(0)), true);
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -2, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createForwardPath() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.1, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createDiagonalPath() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 1, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createForwardPath2() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-2.77, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createBackwardPath() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2.77, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createForwardPath3() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createForwardPath4() //Test Path
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-4.75, 0, new Rotation2d(0)), true);
-  }
 
-
-  public TrajectoryMaker createPortToFrontofTrench()
-    {
-      ArrayList<Translation2d> points = new ArrayList<Translation2d>();
-      points.add(new Translation2d(-1.5, 2.3));
-      points.add(new Translation2d(-3, 2.3));
-      return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
-    }
-  public TrajectoryMaker createMoveDownTrench()
-  {
-    return new TrajectoryMaker(new Pose2d(0,0,new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
-  }
-
-  public TrajectoryMaker createMoveToPort()
-  {
-    ArrayList<Translation2d> points = new ArrayList<Translation2d>();
-      points.add(new Translation2d(1.524, 2.286));
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3.048, 4.572, new Rotation2d(0)), points );
-  }
-  
-
-  public TrajectoryMaker createAutonomousPath1() // Init Line (Start on Left) to Port Test
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
-  }
-
-  public TrajectoryMaker createAutonomousPath2() //Test 2 Electric Bugaloo
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -1, new Rotation2d(0)), true);
-  }
-  
 }

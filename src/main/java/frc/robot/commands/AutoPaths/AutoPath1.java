@@ -10,6 +10,7 @@ package frc.robot.commands.AutoPaths;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.TrajectoryHelper;
 import frc.robot.commands.conveyor.ConveyorSpeed;
 import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.intake.ToggleIntake;
@@ -27,7 +28,7 @@ public class AutoPath1 extends SequentialCommandGroup {
   public AutoPath1() {  // test forward path
    
     super(
-      new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
+      new Autonomous(TrajectoryHelper.createForwardPath().getTrajectory(), TrajectoryHelper.createForwardPath().getAngle())
       // new AutoRotate(180),
       // new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
     );

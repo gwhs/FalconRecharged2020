@@ -7,14 +7,9 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,9 +28,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
-
-//import sun.java2d.cmm.ColorTransform;
-import frc.robot.utility.TrajectoryMaker;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -174,9 +166,6 @@ public class RobotContainer {
     back.whileHeld(new ZeroNavX());
     start.whenPressed(new AutoShoot(false));
 
-    double angleToGo = 45;
-
-
   }
 
 
@@ -192,66 +181,4 @@ public class RobotContainer {
     return new AutoPath1();
 
   }
-
-  // Need better documentation here.  What are these doing?  Are the units in meters?
-  public TrajectoryMaker createfrontScorePath() 
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createTrenchToTargetDiagonal() 
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, -0.25, new Rotation2d(0)), true);//8,-1.6
-  }
-  public TrajectoryMaker createTargetToFrontOfTrench() 
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-0.25, 0.25, new Rotation2d(0)), true);// -4.2,1.6
-  }
-  public TrajectoryMaker createTrenchForward() //Assuming facing forward
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, 0, new Rotation2d(0)), true);//2
-  }
-  
-  public TrajectoryMaker createForwardPath() //For Testing Purposes
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(1, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createForwardPath2() //For Testing Purposes
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
-  }
-  public TrajectoryMaker createToPortPath() //For Testing Purposes
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, 0, new Rotation2d(0)), true);//3
-  }
-
-  public TrajectoryMaker createPortToFrontofTrench()
-    {
-      ArrayList<Translation2d> points = new ArrayList<Translation2d>();
-      points.add(new Translation2d(-1.5, 2.3));
-      points.add(new Translation2d(-3, 2.3));
-      return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
-    }
-  public TrajectoryMaker createMoveDownTrench()
-  {
-    return new TrajectoryMaker(new Pose2d(0,0,new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
-  }
-
-  public TrajectoryMaker createMoveToPort()
-  {
-    ArrayList<Translation2d> points = new ArrayList<Translation2d>();
-      points.add(new Translation2d(1.524, 2.286));
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3.048, 4.572, new Rotation2d(0)), points );
-  }
-  
-
-  public TrajectoryMaker createAutonomousPath1() // Init Line (Start on Left) to Port Test
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), true);
-  }
-
-  public TrajectoryMaker createAutonomousPath2() //Test 2 Electric Bugaloo
-  {
-    return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, -1, new Rotation2d(0)), true);
-  }
-  
 }

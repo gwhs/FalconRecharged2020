@@ -10,6 +10,7 @@ package frc.robot.commands.AutoPaths;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
+import frc.robot.TrajectoryHelper;
 import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.swervedrive.AutoRotate;
@@ -28,10 +29,10 @@ public class Auto2CycleTrenchRunAuto extends SequentialCommandGroup {
     // This is all theoretical code with no actual field measurements. 
     // MAKE SURE TO MEASURE AND SWAP VALUES BEFORE TESTING - Kyle
 
-    TrajectoryMaker traj = RobotContainer.getContainer().createToPortPath();
-    TrajectoryMaker trajTrench = RobotContainer.getContainer().createTargetToFrontOfTrench();
-    TrajectoryMaker trajTrenchForward = RobotContainer.getContainer().createTrenchForward();
-    TrajectoryMaker trajTrenchTarget = RobotContainer.getContainer().createTrenchToTargetDiagonal();
+    TrajectoryMaker traj = TrajectoryHelper.createToPortPath();
+    TrajectoryMaker trajTrench = TrajectoryHelper.createTargetToFrontOfTrench();
+    TrajectoryMaker trajTrenchForward = TrajectoryHelper.createTrenchForward();
+    TrajectoryMaker trajTrenchTarget = TrajectoryHelper.createTrenchToTargetDiagonal();
     addCommands(
       new Autonomous(traj.getTrajectory(), traj.getAngle()),
       new AutoShoot(false),
