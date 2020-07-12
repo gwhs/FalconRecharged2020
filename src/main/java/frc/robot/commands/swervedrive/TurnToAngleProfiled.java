@@ -22,8 +22,8 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
      */
     public TurnToAngleProfiled(double targetAngleDegrees, SwerveDriveSubsystem drive) {
     super(
-        new ProfiledPIDController(Constants.anglePIDp,Constants.anglePIDi, Constants.anglePIDd, //need to tune this better
-            new TrapezoidProfile.Constraints(Constants.maxAngleVelocity,Constants.maxAngleAcceleration)),  
+        new ProfiledPIDController(Constants.ANGLE_PID_P,Constants.ANGLE_PID_I, Constants.ANGLE_PID_D, //need to tune this better
+            new TrapezoidProfile.Constraints(Constants.MAX_ANGLE_VELOCITY,Constants.MAX_ANGLE_ACCELERATION)),
         
         // Close loop on heading
         drive::getGyroAngle2,
@@ -39,7 +39,7 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
     swerveDriveSubsystem = drive;
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
-    getController().setTolerance(Constants.turnTolerance, 10);
+    getController().setTolerance(Constants.TURN_TOLERANCE, 10);
   }
 
 

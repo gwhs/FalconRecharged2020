@@ -19,7 +19,7 @@ public class TurnToAngle extends PIDCommand {
    */
   public TurnToAngle(double targetAngleDegrees,  SwerveDriveSubsystem drive) {
     super(
-        new PIDController(Constants.anglePIDp,Constants.anglePIDi, Constants.anglePIDd),  //need to tune this better.
+        new PIDController(Constants.ANGLE_PID_P,Constants.ANGLE_PID_I, Constants.ANGLE_PID_D),  //need to tune this better.
         
         // Close loop on heading
         drive::getGyroAngle2,
@@ -35,7 +35,7 @@ public class TurnToAngle extends PIDCommand {
     
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
-    getController().setTolerance(Constants.turnTolerance, 10);
+    getController().setTolerance(Constants.TURN_TOLERANCE, 10);
   }
 
   

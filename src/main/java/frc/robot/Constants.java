@@ -47,17 +47,17 @@ public final class Constants {
     public static final double WHEEL_SIZE = 3.838;
 
     public static final double TICKS_PER_INCH = (2048*GEAR_RATIO)/(WHEEL_SIZE*Math.PI);
-    public static final boolean forward = true;
+    public static final boolean FORWARD = true;
     public static final double SPINNER_POSITION_PERCENT = .6;
     public static final double SPINNER_SPEED = 0.2; //only being used in SpinToMid right now
 
     public static final double MOD_TO_CENTER = 0.28575; // distance in meter from center point to each swerve module
 
-    public static final double maxAngleVelocity = 180;
-    public static final double maxAngleAcceleration = 360;
+    public static final double MAX_ANGLE_VELOCITY = 180;
+    public static final double MAX_ANGLE_ACCELERATION = 360;
 
-    public static final double turnTolerance = 0.5;
-    public static final double anglePIDp = 0.0361;
-    public static final double anglePIDi = 0.00;
-    public static final double anglePIDd = 0.00237;
+    public static final double TURN_TOLERANCE = 0.5;
+    public static final double ANGLE_PID_P = 0.0361;
+    public static final double ANGLE_PID_I = 0.00;
+    public static final double ANGLE_PID_D = 0.00237;
 }

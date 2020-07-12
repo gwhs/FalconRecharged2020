@@ -101,7 +101,7 @@ public class SpinToMid extends CommandBase {
 
 
     //setting color and indexes going forward and back
-    if (Constants.forward) {
+    if (Constants.FORWARD) {
       prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize - 1;
       prevColor = expectedColorArray[prevIndex];
       expectedColor = expectedColorArray[(colorDictionary.get(startColor) + 1) % arraySize];

@@ -67,7 +67,7 @@ public class SpinToColor extends CommandBase {
         startColor = color;
         currentColor = color;
 
-        if(Constants.forward) {
+        if(Constants.FORWARD) {
             prevIndex = (colorDictionary.get(startColor) - 1) >= 0 ? colorDictionary.get(startColor) - 1 : arraySize-1;
         }
         else {
