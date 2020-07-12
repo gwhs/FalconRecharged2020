@@ -24,7 +24,7 @@ public class AutoPath1 extends SequentialCommandGroup {
     super(
       new Autonomous(swerveDriveSubsystem, TrajectoryHelper.createForwardPath().getTrajectory(), TrajectoryHelper.createForwardPath().getAngle())
       // new AutoRotate(180),
-      // new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
+      // new Autonomous(TrajectoryHelper.createForwardPath().getTrajectory(), TrajectoryHelper.createForwardPath().getAngle())
     );
   }
   

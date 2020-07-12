@@ -40,28 +40,27 @@ import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
  * scheduler calls). Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class DaphneTwoContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final Command m_autoCommand = null;
-  private XboxController mXboxController;
-  private XboxController mXboxController2;  //operator controller
-  private SwerveDriveSubsystem swerveDriveSubsystem;
-  private ColorPanelSpinner colorPanelSpinner;
-  private ColorSensor colorSensor;
-  private Limelight limelight;
-  private ConveyorTalon conveyorT;
-  private Intake intake;
-  private Shooter shooterMotor;
-  private Compressor compressor;
-  private ClimberTalon climberT;
+  private final XboxController mXboxController;
+  private final XboxController mXboxController2;  //operator controller
+
+  private final SwerveDriveSubsystem swerveDriveSubsystem;
+  private final ColorPanelSpinner colorPanelSpinner;
+  private final ColorSensor colorSensor;
+  private final Limelight limelight;
+  private final ConveyorTalon conveyorT;
+  private final Intake intake;
+  private final Shooter shooterMotor;
+  private final Compressor compressor;
+  private final ClimberTalon climberT;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
-    // Configure the button bindings
-
+  public DaphneTwoContainer() {
+    // create all the subsystems needed in this robot
     SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 169); //real:390 practice: 212
     SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 176); //real:293 practice: 59
     SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 294); //real:298 practice: 56
@@ -71,19 +70,25 @@ public class RobotContainer {
     swerveDriveSubsystem.zeroGyro();
     colorPanelSpinner = new ColorPanelSpinner();
     colorSensor = new ColorSensor();
-    mXboxController = new XboxController(0);
-    mXboxController2 = new XboxController(1);
     limelight = new Limelight(swerveDriveSubsystem);
     conveyorT = new ConveyorTalon();
     intake = new Intake();
     shooterMotor = new Shooter();
     compressor = new Compressor();
     climberT = new ClimberTalon();
-    configureButtonBindings();
+
+    // create the input controllers
+    mXboxController = new XboxController(0);
+    mXboxController2 = new XboxController(1);
+
+    // setup any default commands
     swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
     colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
     conveyorT.setDefaultCommand(new SenseCell(conveyorT));
     climberT.setDefaultCommand(new ClimberArmSpeed(climberT, mXboxController2));
+
+    // configure the buttons
+    configureButtonBindings();
   }
 
   /**
@@ -126,9 +131,7 @@ public class RobotContainer {
     rightBumper.whenPressed(new SetShooterSpeed(shooterMotor));
     back.whileHeld(new ZeroNavX(swerveDriveSubsystem));
     start.whenPressed(new AutoShoot(conveyorT, shooterMotor,false));
-
   }
-
 
 
   /**
@@ -140,6 +143,5 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     //How can we change this to select the auto routine from the dashboard?
     return new AutoPath1(swerveDriveSubsystem);
-
   }
 }

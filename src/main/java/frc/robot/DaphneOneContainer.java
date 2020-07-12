@@ -44,25 +44,24 @@ import frc.robot.subsystems.Shooter;
  * commands, and button mappings) should be declared here.
  */
 public class DaphneOneContainer {
-  // The robot's subsystems and commands are defined here...
+  private final XboxController mXboxController;
+  private final XboxController mXboxController2;
 
-  private XboxController mXboxController;
-  private XboxController mXboxController2;
-  private SwerveDriveSubsystem swerveDriveSubsystem;
-  private ColorPanelSpinner colorPanelSpinner;
-  private ColorSensor colorSensor;
-  private Limelight limelight;
-  private ConveyorTalon conveyor;
-  private Intake intake;
-  private Shooter shooter;
-  private Compressor compressor;
-  private ClimberTalon climber;
+  private final SwerveDriveSubsystem swerveDriveSubsystem;
+  private final ColorPanelSpinner colorPanelSpinner;
+  private final ColorSensor colorSensor;
+  private final Limelight limelight;
+  private final ConveyorTalon conveyor;
+  private final Intake intake;
+  private final Shooter shooter;
+  private final Compressor compressor;
+  private final ClimberTalon climber;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public DaphneOneContainer() {
-    // Configure the button bindings
+    // create all the subsystems needed in this robot
     SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(DaphneOneConstants.ANGLE1_TALON), new TalonFX(DaphneOneConstants.DRIVE1_TALON), 169); //2020: 70
     SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(DaphneOneConstants.ANGLE2_TALON), new TalonFX(DaphneOneConstants.DRIVE2_TALON), 176); //2020: 211
     SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(DaphneOneConstants.ANGLE3_TALON), new TalonFX(DaphneOneConstants.DRIVE3_TALON), 292); //2020: 307
@@ -71,9 +70,6 @@ public class DaphneOneContainer {
     swerveDriveSubsystem = new SwerveDriveSubsystem(m0, m1, m2, m3);
     colorPanelSpinner = new ColorPanelSpinner();
     colorSensor = new ColorSensor();
-
-    mXboxController = new XboxController(0);
-    mXboxController2 = new XboxController(1);
     limelight = new Limelight(swerveDriveSubsystem);
     conveyor = new ConveyorTalon();
     intake = new Intake();
@@ -81,11 +77,18 @@ public class DaphneOneContainer {
     compressor = new Compressor();
     climber = new ClimberTalon();
 
-    swerveDriveSubsystem.zeroGyro();
+    // create the input controllers
+    mXboxController = new XboxController(0);
+    mXboxController2 = new XboxController(1);
+
+    // setup any default commands
     swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
     colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
-//    shooter.setDefaultCommand(new SpinShooterMotor());
+    //shooter.setDefaultCommand(new SpinShooterMotor());
+
+    // configure the buttons
     configureButtonBindings();
+    swerveDriveSubsystem.zeroGyro();
   }
 
   /**

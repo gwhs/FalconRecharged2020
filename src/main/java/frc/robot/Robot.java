@@ -22,8 +22,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private DaphneTwoContainer m_daphneTwoContainer;
   private DaphneOneContainer m_daphneOneContainer;
+  private TestbedContainer m_testbedContainer;
 
   private SendableChooser<Command> autoChooser;
 
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our DaphneTwoContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     switch(ROBOT_TYPE) {
       case DAPHNE1:
@@ -48,20 +49,22 @@ public class Robot extends TimedRobot {
         m_autonomousCommand = m_daphneOneContainer.getAutonomousCommand();
         break;
       case DAPHNE2:
-        m_robotContainer = new RobotContainer();
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_daphneTwoContainer = new DaphneTwoContainer();
+        m_autonomousCommand = m_daphneTwoContainer.getAutonomousCommand();
         break;
       case TESTBED:
+        m_testbedContainer = new TestbedContainer();
+        m_autonomousCommand = m_testbedContainer.getAutonomousCommand();
+        break;
       default:
-        // TODO: add testbed robot container
+        // unexpected, will crash later
         break;
     }
     autoChooser = new SendableChooser<Command>();
 
-
-    // autoChooser.addOption("Move Forward 1", new Autonomous(m_robotContainer.createAutonomousPath()));
-    // autoChooser.addOption("Move Forward 2", new Autonomous(m_robotContainer.createAutonomousPath1()));
-    // autoChooser.addOption("Move Forward 3", new Autonomous(m_robotContainer.createAutonomousPath2()));
+    // autoChooser.addOption("Move Forward 1", new Autonomous(m_daphneTwoContainer.createAutonomousPath()));
+    // autoChooser.addOption("Move Forward 2", new Autonomous(m_daphneTwoContainer.createAutonomousPath1()));
+    // autoChooser.addOption("Move Forward 3", new Autonomous(m_daphneTwoContainer.createAutonomousPath2()));
 
     SmartDashboard.putData(autoChooser);
   }
@@ -94,7 +97,7 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+   * This autonomous runs the autonomous command selected by your {@link DaphneTwoContainer} class.
    */
   @Override
   public void autonomousInit() {

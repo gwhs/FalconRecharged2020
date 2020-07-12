@@ -114,14 +114,13 @@ public class SpinToColor extends CommandBase {
     public void execute() {
   
         colorPanelSpinner.spin(0.2); //change the speed
-        //currentColor = ((colorSensor.getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        //currentColor = ((colorSensor.getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : colorSensor.getColor());
         updateColor();
 
         SmartDashboard.putString("currentColor", currentColor);
         SmartDashboard.putString("previousColor", previousColor);
         SmartDashboard.putNumber("colorCount", colorCount);
         SmartDashboard.putString("targetColor", targetColor);
-
 
         previousColor = currentColor;
     
