@@ -9,8 +9,6 @@ package frc.robot;
 
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ser.impl.FailingSerializer;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,13 +17,9 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoPaths.Auto2CycleTrenchRunAuto;
 import frc.robot.commands.AutoPaths.AutoPath1;
-import frc.robot.commands.AutoPaths.AutoPath2;
 import frc.robot.commands.climber.*;
-import frc.robot.commands.controlpanel.*;
 import frc.robot.commands.conveyor.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.AutoShoot;
@@ -180,24 +174,9 @@ public class RobotContainer {
     back.whileHeld(new ZeroNavX());
     start.whenPressed(new AutoShoot(false));
 
-    //start.whenPressed(new AutoRotate(45));
-
     double angleToGo = 45;
 
-    //start.whenPressed(new TurnToAngleProfiled(angleToGo, swerveDriveSubsystem));
-    //buttonX.whenPressed(new GoToDistance(72, swerveDriveSubsystem));
-    
-    //buttonX.whenPressed(new AutoPath1());
-    //buttonA.whenPressed(new AutoPath2());
-    //buttonB.whenPressed(new Auto2CycleTrenchRunAuto());
-    //buttonY.whenPressed(new AutoRotate(173));
-    
 
-    // buttonA_2.whenPressed(new ToggleIgnore());
-    // buttonX_2.whenPressed(new ToggleClimberGearLock(climberT));
-    // buttonY_2.whenPressed(new SemiAutoClimb());
-    // buttonB_2.whenPressed(new SemiAutoPullUp());
-    
   }
 
 

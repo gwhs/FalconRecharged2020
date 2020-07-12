@@ -21,7 +21,6 @@ import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.SemiAutoClimb;
 import frc.robot.commands.climber.SemiAutoPullUp;
 import frc.robot.commands.climber.ToggleClimberGearLock;
-import frc.robot.commands.controlpanel.SpinRotations;
 import frc.robot.commands.controlpanel.SpinToColor;
 import frc.robot.commands.controlpanel.SpinToMidColor;
 import frc.robot.commands.conveyor.ConveyorSpeed;
@@ -176,16 +175,12 @@ public class DaphneOneContainer {
     buttonX.whileHeld(new IntakeSpeed(.5));
     buttonY.whileHeld(new ConveyorSpeed(-.8));
     buttonLB.whileHeld(new ConveyorSpeed(.5));
-//    buttonRB.whileHeld(new SpinShooterMotor());
     buttonBack.whenPressed(new ZeroNavX());
-    //buttonStart.whenPressed(new);
-    
 
-    //buttonA_2.whenPressed(new ToggleIgnore());
+
     buttonB_2.whenPressed(new SemiAutoClimb());
     buttonX_2.whenPressed(new SemiAutoPullUp());
     buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    buttonRB_2.whenPressed(new SpinRotations());
     buttonLB_2.whenPressed(new SpinToColor());
     buttonBack_2.whenPressed(new SpinToMidColor()); //may b
     // buttonStart_2.
