@@ -23,14 +23,6 @@ public final class Constants {
     public static final int CLIMBER2_SPARK = 11;
     public static final int CLIMBER1_TALON = 11; //change id
     public static final int CLIMBER2_TALON = 10; //change id
-    public static final int ANGLE1_TALON = 1;
-    public static final int ANGLE2_TALON = 3;
-    public static final int ANGLE3_TALON = 7;
-    public static final int ANGLE4_TALON = 5;
-    public static final int DRIVE1_TALON = 0;
-    public static final int DRIVE2_TALON = 2;
-    public static final int DRIVE3_TALON = 6;
-    public static final int DRIVE4_TALON = 4;
     public static final int INTAKEFORWARD_SOLENOID = 4;
     public static final int INTAKEREVERSE_SOLENOID = 5;
     public static final int INTAKEFORWARD_SOLENOID2 = 6;

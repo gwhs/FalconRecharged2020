@@ -61,10 +61,10 @@ public class DaphneTwoContainer {
    */
   public DaphneTwoContainer() {
     // create all the subsystems needed in this robot
-    SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 169); //real:390 practice: 212
-    SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 176); //real:293 practice: 59
-    SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 294); //real:298 practice: 56
-    SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 27); //real: 355 practice: 190
+    SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(DaphneTwoConstants.ANGLE2_TALON), new TalonFX(DaphneTwoConstants.DRIVE2_TALON), 169); //real:390 practice: 212
+    SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(DaphneTwoConstants.ANGLE1_TALON), new TalonFX(DaphneTwoConstants.DRIVE1_TALON), 176); //real:293 practice: 59
+    SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(DaphneTwoConstants.ANGLE3_TALON), new TalonFX(DaphneTwoConstants.DRIVE3_TALON), 294); //real:298 practice: 56
+    SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(DaphneTwoConstants.ANGLE4_TALON), new TalonFX(DaphneTwoConstants.DRIVE4_TALON), 27); //real: 355 practice: 190
 
     swerveDriveSubsystem = new SwerveDriveSubsystem(m0, m1, m2, m3);
     swerveDriveSubsystem.zeroGyro();
