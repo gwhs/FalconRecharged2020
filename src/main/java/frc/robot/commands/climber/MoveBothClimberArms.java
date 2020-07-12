@@ -11,30 +11,28 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ClimberTalon;
 
 public class MoveBothClimberArms extends CommandBase {
   /**
    * Creates a new MoveBothClimberArms.
    */
   private double distance;
+  private ClimberTalon climberTalon;
   private TalonFX masterArm;
   private TalonFX slaveArm;
-  // private CANSparkMax masterArm;
-  // private CANSparkMax slaveArm;
   private double initPos;
   private double targetPos;
 
-  public MoveBothClimberArms(double ticks, TalonFX a1, TalonFX a2) {
+  public MoveBothClimberArms(ClimberTalon climberTalon, double ticks) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getClimberT());
-    masterArm = a1;
-    slaveArm = a2;
+    addRequirements(climberTalon);
+    this.climberTalon = climberTalon;
+    masterArm = climberTalon.getUpperArm();
+    slaveArm = climberTalon.getUpperArm();
     distance = ticks;
   }
 

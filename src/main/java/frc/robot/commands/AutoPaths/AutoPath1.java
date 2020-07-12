@@ -8,15 +8,9 @@
 package frc.robot.commands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.TrajectoryHelper;
-import frc.robot.commands.conveyor.ConveyorSpeed;
-import frc.robot.commands.intake.IntakeSpeed;
-import frc.robot.commands.intake.ToggleIntake;
-import frc.robot.commands.swervedrive.AutoRotate;
 import frc.robot.commands.swervedrive.Autonomous;
-import frc.robot.utility.TrajectoryMaker;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,10 +19,10 @@ public class AutoPath1 extends SequentialCommandGroup {
   /**
    * Creates a new AutoPath1.
    */
-  public AutoPath1() {  // test forward path
+  public AutoPath1(SwerveDriveSubsystem swerveDriveSubsystem) {  // test forward path
    
     super(
-      new Autonomous(TrajectoryHelper.createForwardPath().getTrajectory(), TrajectoryHelper.createForwardPath().getAngle())
+      new Autonomous(swerveDriveSubsystem, TrajectoryHelper.createForwardPath().getTrajectory(), TrajectoryHelper.createForwardPath().getAngle())
       // new AutoRotate(180),
       // new Autonomous(RobotContainer.getContainer().createForwardPath().getTrajectory(), RobotContainer.getContainer().createForwardPath().getAngle())
     );

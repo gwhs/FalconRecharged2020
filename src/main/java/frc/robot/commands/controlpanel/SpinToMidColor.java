@@ -8,6 +8,8 @@
 package frc.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.Color.ColorSensor;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,10 +18,8 @@ public class SpinToMidColor extends SequentialCommandGroup {
   /**
    * Creates a new SpinToMidColor.
    */
-  public SpinToMidColor() { //viv bday = 3/6
+  public SpinToMidColor(ColorSensor colorSensor, ColorPanelSpinner colorPanelSpinner) { //viv bday = 3/6
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    // super(new SpinToColor(data));
-    super(new SpinToColor(), new SpinToMid());
+    super(new SpinToColor(colorSensor, colorPanelSpinner), new SpinToMid(colorSensor, colorPanelSpinner));
   }
 }

@@ -9,7 +9,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 
 public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwise - is counter clockwise test commit 2 electric bugaloo
 	private static final double WHEELBASE = 22.5; 
@@ -27,7 +26,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	 * 2 is Back Left
 	 * 3 is Back Right
 	 */
-	private SwerveDriveModule[] mSwerveModules = new SwerveDriveModule[4];
+	private final SwerveDriveModule[] mSwerveModules = new SwerveDriveModule[4];
 
 	public AHRS mNavX = new AHRS(SPI.Port.kMXP, (byte) 200);
 
@@ -51,7 +50,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		zeroGyro();
 
 		// mSwerveModules[0].getDriveMotor().setInverted(InvertType.InvertMotorOutput); //real: false
-		//mSwerveModules[2].getDriveMotor().setInverted(true); //
+		// mSwerveModules[2].getDriveMotor().setInverted(true); //
 		// mSwerveModules[1].getDriveMotor().setInverted(false); //real: true
 		// mSwerveModules[2].getDriveMotor().setInverted(false); //real: false
 		//mSwerveModules[3].getDriveMotor().setInverted(TalonFXInvertType.CounterClockwise); //real: false
@@ -60,15 +59,12 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		 mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[3].getAngleMotor().setInverted(true); //real: true
-		 
-
 
 		mSwerveModules[0].resetEncoder();
 		for(int i = 0; i < 4; i++) {
 			mSwerveModules[i].getDriveMotor().setNeutralMode(NeutralMode.Brake);
 		}
 
-		setDefaultCommand(new HolonomicDriveCommand(this));
 		isAuto = false;
 	}
 
@@ -156,9 +152,9 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 			if (Math.abs(forward) > 0.05 ||
 			    Math.abs(strafe) > 0.05 ||
 			    Math.abs(rotation) > 0.05) {
-				mSwerveModules[i].setTargetAngle(angles[i] + 180);
+				mSwerveModules[i].setTargetAngle(angles[i] + 180, isAuto);
 			} else {
-				mSwerveModules[i].setTargetAngle(mSwerveModules[i].getTargetAngle());
+				mSwerveModules[i].setTargetAngle(mSwerveModules[i].getTargetAngle(), isAuto);
 			}
 			mSwerveModules[i].setTargetSpeed(speeds[i]);
 		}
@@ -189,7 +185,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		angleError = Math.max(angleError, -1);
 		targetPos = (targetPos * Constants.GEAR_RATIO)/(Constants.WHEEL_SIZE*Math.PI); //inches to ticks  -- can remove this magic number?  
 		for (int i = 0; i < 4; i++) {
-				mSwerveModules[i].setTargetAngle(angle); //mSwerveModules[i].getTargetAngle());
+				mSwerveModules[i].setTargetAngle(angle, isAuto); //mSwerveModules[i].getTargetAngle());
 				mSwerveModules[i].setTargetDistance(targetPos+mSwerveModules[i].getDriveMotor().getSelectedSensorPosition());
 			}
 			

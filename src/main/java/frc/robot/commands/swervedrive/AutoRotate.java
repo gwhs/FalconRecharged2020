@@ -9,7 +9,7 @@ package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
 public class AutoRotate extends CommandBase {
   /**
@@ -19,25 +19,28 @@ public class AutoRotate extends CommandBase {
   private double initAngle;  // do these need to instance variables?
   private double currAngle;
   private double targetAngle;
+  
+  SwerveDriveSubsystem swerveDriveSubsystem;
 
-  public AutoRotate(double angle) { //in degrees
+  public AutoRotate(SwerveDriveSubsystem swerveDriveSubsystem, double angle) { //in degrees
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain());
+    addRequirements(swerveDriveSubsystem);
     this.angle = angle;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initAngle = RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle();
+    initAngle = swerveDriveSubsystem.getGyroAngle();
     targetAngle = initAngle + angle;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currAngle = RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle();
-    RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, 0, Math.signum(angle)*-.2); //forward, strafe, rotation, why -.2
+    currAngle = swerveDriveSubsystem.getGyroAngle();
+    swerveDriveSubsystem.holonomicDrive(0, 0, Math.signum(angle)*-.2); //forward, strafe, rotation, why -.2
     SmartDashboard.putNumber("init angle", initAngle);
     SmartDashboard.putNumber("curr angle", (currAngle));
     SmartDashboard.putNumber("target angle", (targetAngle));
@@ -46,10 +49,10 @@ public class AutoRotate extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(0).setTargetAngle(0);
-    // RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(1).setTargetAngle(0);
-    // RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(2).setTargetAngle(180);
-    // RobotContainer.getContainer().getHolonomicDrivetrain().getSwerveModule(3).setTargetAngle(0);
+    // swerveDriveSubsystem.getSwerveModule(0).setTargetAngle(0);
+    // swerveDriveSubsystem.getSwerveModule(1).setTargetAngle(0);
+    // swerveDriveSubsystem.getSwerveModule(2).setTargetAngle(180);
+    // swerveDriveSubsystem.getSwerveModule(3).setTargetAngle(0);
   }
 
   // Returns true when the command should end.

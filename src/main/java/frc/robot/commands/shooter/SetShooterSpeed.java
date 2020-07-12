@@ -9,7 +9,6 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shooter;
 
 
@@ -25,26 +24,18 @@ public class SetShooterSpeed extends CommandBase {
   private double pidD;
 
 
-  public SetShooterSpeed() {    
-    SmartDashboard.putNumber("Current Shooter RPM", 0);
-    SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3600));
-    SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0.04928));
-    SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
-    SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
-    SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
-    shooter = RobotContainer.getContainer().getShooterMotor();
-    this.speed = -6000;
-    addRequirements(shooter);
+  public SetShooterSpeed(Shooter shooter) {
+    this(shooter, -6000);
   }
 
-  public SetShooterSpeed(double rpm) {    
+  public SetShooterSpeed(Shooter shooter, double rpm) {
     SmartDashboard.putNumber("Current Shooter RPM", 0);
     SmartDashboard.putNumber("Input Shooter RPM", SmartDashboard.getNumber("Input Shooter RPM", 3600));
     SmartDashboard.putNumber("Input pidF", SmartDashboard.getNumber("Input pidF", 0.04928));
     SmartDashboard.putNumber("Input pidP", SmartDashboard.getNumber("Input pidP", 0.1));
     SmartDashboard.putNumber("Input pidI", SmartDashboard.getNumber("Input pidI", 0));
     SmartDashboard.putNumber("Input pidD", SmartDashboard.getNumber("Input pidD", 2.5));
-    shooter = RobotContainer.getContainer().getShooterMotor();
+    this.shooter = shooter;
     this.speed = rpm;
     addRequirements(shooter);
   }
@@ -54,8 +45,6 @@ public class SetShooterSpeed extends CommandBase {
   public void initialize() {
 
     shooter.setSpeed(-this.speed);
-    
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.

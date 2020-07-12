@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   public static final String DAPHNE2 = "daphne2";
   public static final String TESTBED = "testbed";
 
-  private static final String ROBOT_TYPE = DAPHNE1;
+  private static final String ROBOT_TYPE = DAPHNE2;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -45,9 +45,11 @@ public class Robot extends TimedRobot {
       case DAPHNE1:
         m_daphneOneContainer = new DaphneOneContainer();
 //        m_daphneOneContainer.getLimelight().setCamMode();   // not sure what this did in master branch
+        m_autonomousCommand = m_daphneOneContainer.getAutonomousCommand();
         break;
       case DAPHNE2:
         m_robotContainer = new RobotContainer();
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         break;
       case TESTBED:
       default:
@@ -96,7 +98,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

@@ -9,11 +9,9 @@ package frc.robot.commands.climber;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ClimberTalon;
 
 public class MoveClimberArm extends CommandBase {
   /**
@@ -22,13 +20,12 @@ public class MoveClimberArm extends CommandBase {
   private double initPos;
   private double targetPosition;
   private TalonFX arm;
-  //private CANSparkMax arm;
   private double ticks;
-  public MoveClimberArm(double ticks, TalonFX arm) {
+  public MoveClimberArm(ClimberTalon climberTalon, double ticks, TalonFX arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
     this.ticks = ticks;
-    addRequirements(RobotContainer.getContainer().getClimberT());
+    addRequirements(climberTalon);
   }
 
   // Called when the command is initially scheduled.

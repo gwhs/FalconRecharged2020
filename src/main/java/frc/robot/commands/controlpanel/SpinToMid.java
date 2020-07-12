@@ -14,8 +14,14 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.Color.ColorSensor;
 
+/**
+ * rbb: This command is broken - the initialize command has while loops that might not end
+ * They loop in place while the spinner is going, rather than starting the spin and looking for position
+ * on each execute cycle
+ */
 public class SpinToMid extends CommandBase {
   /**
    * Creates a new SenseColorTest.
@@ -32,18 +38,21 @@ public class SpinToMid extends CommandBase {
   private double targetPos;
   private String gameData;
   private String data;
-private double forwardPos;
-private double finalPos;
+  private double forwardPos;
+  private double finalPos;
 
+  private ColorSensor colorSensor;
+  private ColorPanelSpinner colorPanelSpinner;
 
   private Map<String, String> impossible;
 
-  public SpinToMid() {
+  public SpinToMid(ColorSensor colorSensor, ColorPanelSpinner colorPanelSpinner) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getColorSensor());
-    addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
-    RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
-    RobotContainer.getContainer().getColorPanelSpinner().setPID();
+    addRequirements(colorSensor, colorPanelSpinner);
+    this.colorSensor = colorSensor;
+    this.colorPanelSpinner = colorPanelSpinner;
+    colorPanelSpinner.resetEncoder();
+    colorPanelSpinner.setPID();
     //pairs colors with colors that it can't reach so we can detect if the sensor jumps
     impossible = new HashMap<String, String>();
     impossible.put("Yellow", "Green");
@@ -56,7 +65,7 @@ private double finalPos;
   @Override
   public void initialize() {
     String startColor;
-    // RobotContainer.getContainer().getColorPanelSpinner().resetEncoder();
+    // colorPanelSpinner.resetEncoder();
     data =  DriverStation.getInstance().getGameSpecificMessage();
 
     //matches input color to target color
@@ -85,7 +94,7 @@ private double finalPos;
     colorDictionary.put("Green", Integer.valueOf(2));
     colorDictionary.put("Blue", Integer.valueOf(3));
 
-    currentColor = RobotContainer.getContainer().getColorSensor().getColor();
+    currentColor = colorSensor.getColor();
     startColor = gameData;
 
     SmartDashboard.putString("mid target color", startColor);
@@ -120,7 +129,7 @@ private double finalPos;
  
     String wrongColor = impossible.get(currentColor);
 
-    String detected = RobotContainer.getContainer().getColorSensor().getColor();
+    String detected = colorSensor.getColor();
     if (!detected.equals(wrongColor)) {
       currentColor = detected;
     }
@@ -132,26 +141,26 @@ private double finalPos;
     String wrongColor = impossible.get(gameData);
 
     while(!currentColor.equals(wrongColor))  {//"Blue"
-      RobotContainer.getContainer().getColorPanelSpinner().spin(Constants.SPINNER_SPEED);
+      colorPanelSpinner.spin(Constants.SPINNER_SPEED);
       updateColor();
     }
-    RobotContainer.getContainer().getColorPanelSpinner().spin(0);
-    forwardPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    colorPanelSpinner.spin(0);
+    forwardPos = colorPanelSpinner.getPosition();
+    colorPanelSpinner.printPosition();
     SmartDashboard.putNumber("forward pos", forwardPos);
     while(!currentColor.equals(gameData)) { //"Red"
-      RobotContainer.getContainer().getColorPanelSpinner().spin(-Constants.SPINNER_SPEED);
+      colorPanelSpinner.spin(-Constants.SPINNER_SPEED);
       updateColor();
     }
     while(!currentColor.equals(wrongColor)) { //"Blue"
-      RobotContainer.getContainer().getColorPanelSpinner().spin(-Constants.SPINNER_SPEED);
+      colorPanelSpinner.spin(-Constants.SPINNER_SPEED);
       updateColor();
     }
-    RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+    colorPanelSpinner.spin(0);
 
 
-     finalPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    finalPos = colorPanelSpinner.getPosition();
+    colorPanelSpinner.printPosition();
     segmentLength = Math.abs(forwardPos - finalPos);
     SmartDashboard.putNumber("backward pos", finalPos);
 
@@ -162,8 +171,8 @@ private double finalPos;
     //moves to middle
     SmartDashboard.putNumber("Target pos", targetPos);
     SmartDashboard.putNumber("Segment length", segmentLength);
-    RobotContainer.getContainer().getColorPanelSpinner().setPosition(targetPos);
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    colorPanelSpinner.setPosition(targetPos);
+    colorPanelSpinner.printPosition();
 
     updateColor();
     SmartDashboard.putString("currentColor", currentColor);
@@ -172,34 +181,34 @@ private double finalPos;
 
 //moves to middle of color segment
   public void findMid() {
-    SmartDashboard.putNumber("init pos", RobotContainer.getContainer().getColorPanelSpinner().getPosition());
+    SmartDashboard.putNumber("init pos", colorPanelSpinner.getPosition());
     updateColor();
     SmartDashboard.putString("currentColor", currentColor);
 
     //detects first color change
     while (currentColor!= expectedColor) {
 
-      RobotContainer.getContainer().getColorPanelSpinner().spin(Constants.SPINNER_SPEED);
+      colorPanelSpinner.spin(Constants.SPINNER_SPEED);
       updateColor();
-      RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+      colorPanelSpinner.printPosition();
     }
-    RobotContainer.getContainer().getColorPanelSpinner().spin(0);
-     forwardPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    colorPanelSpinner.spin(0);
+    forwardPos = colorPanelSpinner.getPosition();
+    colorPanelSpinner.printPosition();
     SmartDashboard.putNumber("forward pos", forwardPos);
     
     //detects next color change spinning back
     while (currentColor != prevColor) {
       SmartDashboard.putString("currentColor", currentColor);
-      RobotContainer.getContainer().getColorPanelSpinner().spin(-Constants.SPINNER_SPEED);
+      colorPanelSpinner.spin(-Constants.SPINNER_SPEED);
       updateColor();
-      RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+      colorPanelSpinner.printPosition();
     }
 
-    RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+    colorPanelSpinner.spin(0);
 
-     finalPos = RobotContainer.getContainer().getColorPanelSpinner().getPosition();
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    finalPos = colorPanelSpinner.getPosition();
+    colorPanelSpinner.printPosition();
     segmentLength = Math.abs(forwardPos - finalPos);
     SmartDashboard.putNumber("backward pos", finalPos);
 
@@ -209,8 +218,8 @@ private double finalPos;
     //moves to middle
     SmartDashboard.putNumber("Target pos", targetPos);
     SmartDashboard.putNumber("Segment length", segmentLength);
-    RobotContainer.getContainer().getColorPanelSpinner().setPosition(targetPos);
-    RobotContainer.getContainer().getColorPanelSpinner().printPosition();
+    colorPanelSpinner.setPosition(targetPos);
+    colorPanelSpinner.printPosition();
 
     updateColor();
     SmartDashboard.putString("currentColor", currentColor);
@@ -226,12 +235,12 @@ private double finalPos;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //return (Math.abs(RobotContainer.getContainer().getColorPanelSpinner().getPosition() - targetPos) < 0.01) || RobotContainer.getContainer().getColorPanelSpinner().getPosition() < forwardPos - 5.1;
-    return Math.abs(RobotContainer.getContainer().getColorPanelSpinner().getPosition() - targetPos) < 0.01;
+    //return (Math.abs(colorPanelSpinner.getPosition() - targetPos) < 0.01) || colorPanelSpinner.getPosition() < forwardPos - 5.1;
+    return Math.abs(colorPanelSpinner.getPosition() - targetPos) < 0.01;
   }
 
   @Override
   public void end(final boolean interrupted) {
-    RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+    colorPanelSpinner.spin(0);
   }
 }

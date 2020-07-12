@@ -7,17 +7,23 @@
 
 package frc.robot.commands.climber;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ClimberTalon;
 import frc.robot.utility.MathUtils;
 
 public class ClimberArmSpeed extends CommandBase {
   /**
    * Creates a new ClimberArmSpeed.
    */
-  public  ClimberArmSpeed() {
+  private ClimberTalon mClimberTalon;
+  private XboxController operatorController;
+
+  public ClimberArmSpeed(ClimberTalon climberTalon, XboxController operatorController) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getClimberT());
+    addRequirements(climberTalon);
+    this.mClimberTalon = climberTalon;
+    this.operatorController = operatorController;
   }
 
   // Called when the command is initially scheduled.
@@ -28,11 +34,11 @@ public class ClimberArmSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed1 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(1));
-    double speed2 = MathUtils.deadband(RobotContainer.getContainer().getOperatorController().getRawAxis(5));
+    double speed1 = MathUtils.deadband(operatorController.getRawAxis(1));
+    double speed2 = MathUtils.deadband(operatorController.getRawAxis(5));
     // if(RobotContainer.getContainer().getClimbController().get)
-    RobotContainer.getContainer().getClimberT().moveUpperArm(-speed1);
-    RobotContainer.getContainer().getClimberT().moveLowerArm(speed2);
+    mClimberTalon.moveUpperArm(-speed1);
+    mClimberTalon.moveLowerArm(speed2);
   }
 
   // Called once the command ends or is interrupted.

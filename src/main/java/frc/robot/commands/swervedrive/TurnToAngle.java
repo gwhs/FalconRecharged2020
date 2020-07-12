@@ -3,7 +3,6 @@ package frc.robot.commands.swervedrive;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.*;
 
 
@@ -11,6 +10,7 @@ import frc.robot.subsystems.Drive.*;
  * A command that will turn the robot to the specified angle.
  */
 public class TurnToAngle extends PIDCommand {
+  SwerveDriveSubsystem swerveDriveSubsystem;
   /**
    * Turns to robot to the specified angle.
    *
@@ -29,7 +29,7 @@ public class TurnToAngle extends PIDCommand {
         output -> drive.holonomicDrive(0, 0, output),
         // Require the drive
         drive);
-
+    swerveDriveSubsystem = drive;
     // Set the controller to be continuous (because it is an angle controller)
     getController().enableContinuousInput(-180, 180);
     
@@ -42,7 +42,7 @@ public class TurnToAngle extends PIDCommand {
   public void execute() {
     // TODO Auto-generated method stub
     super.execute();
-    System.out.println("angle: " + RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle2());
+    System.out.println("angle: " + swerveDriveSubsystem.getGyroAngle2());
   }
   @Override
   public boolean isFinished() {

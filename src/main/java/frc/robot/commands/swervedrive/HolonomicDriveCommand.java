@@ -7,31 +7,28 @@
 
 package frc.robot.commands.swervedrive;
 
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Drive.HolonomicDrivetrain;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 import frc.robot.utility.MathUtils;
 
 public class HolonomicDriveCommand extends CommandBase {
   /**
    * Creates a new HolonomicDriveCommand.
    */
-  private final HolonomicDrivetrain mDrivetrain;
-  private XboxController mXboxController;
+  private final SwerveDriveSubsystem mDrivetrain;
+  private final XboxController mXboxController;
 
-	public HolonomicDriveCommand(HolonomicDrivetrain drivetrain) {
+	public HolonomicDriveCommand(SwerveDriveSubsystem drivetrain, XboxController mXboxController) {
 		mDrivetrain = drivetrain;
 		addRequirements(drivetrain);
-		
+		this.mXboxController = mXboxController;
 	}
 
 	@Override
 	public void execute() {
-		mXboxController = RobotContainer.getContainer().getDriveController();
-		if(RobotContainer.getContainer().getHolonomicDrivetrain().getIsAuto())
+		if(mDrivetrain.getIsAuto())
 		{
 			mDrivetrain.setFieldOriented(false);
 		}

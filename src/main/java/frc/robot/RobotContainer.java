@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
+import frc.robot.commands.controlpanel.SpinnerCommand;
 import frc.robot.commands.conveyor.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.AutoShoot;
@@ -38,12 +39,10 @@ import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final Command m_autoCommand = null;
   private XboxController mXboxController;
   private XboxController mXboxController2;  //operator controller
-  private static RobotContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSpinner colorPanelSpinner;
   private ColorSensor colorSensor;
@@ -58,7 +57,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    theContainer = this;
     // Configure the button bindings
     swerveDriveSubsystem = new SwerveDriveSubsystem();
     swerveDriveSubsystem.zeroGyro();
@@ -66,63 +64,17 @@ public class RobotContainer {
     colorSensor = new ColorSensor();
     mXboxController = new XboxController(0);
     mXboxController2 = new XboxController(1);
-    limelight = new Limelight();
+    limelight = new Limelight(swerveDriveSubsystem);
     conveyorT = new ConveyorTalon();
     intake = new Intake();
     shooterMotor = new Shooter();
     compressor = new Compressor();
     climberT = new ClimberTalon();
     configureButtonBindings();
-    conveyorT.setDefaultCommand(new SenseCell());
-    climberT.setDefaultCommand(new ClimberArmSpeed());
-  }
-
-  public Shooter getShooterMotor() {
-    return shooterMotor;
-  }
-
-  public ColorPanelSpinner getColorPanelSpinner() {
-    return colorPanelSpinner;
-  }
-
-  public ColorSensor getColorSensor() {
-    return colorSensor;
-  }
-
-  public SwerveDriveSubsystem getHolonomicDrivetrain() {
-    return swerveDriveSubsystem;
-  }
-
-  public XboxController getDriveController() {
-    return mXboxController;
-  }
-
-  public XboxController getOperatorController() {
-    return mXboxController2;
-  }
-
-  public static RobotContainer getContainer(){
-    return theContainer;
-
-  }
-
-  public Limelight getLimelight() {
-    return limelight;
-  }
-
-  public ConveyorTalon getConveyorT(){
-    return conveyorT;
-  }
-
-  public Intake getIntake() {
-    return intake;
-  }
-
-  public Compressor getCompressor() {
-    return compressor;
-  }
-  public ClimberTalon getClimberT() {
-    return climberT;
+    swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
+    colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
+    conveyorT.setDefaultCommand(new SenseCell(conveyorT));
+    climberT.setDefaultCommand(new ClimberArmSpeed(climberT, mXboxController2));
   }
 
   /**
@@ -159,12 +111,12 @@ public class RobotContainer {
     */
     buttonA.whenPressed(new InstantCommand(intake::toggleIntakeSolenoidMode, intake));
 
-    buttonY.whileHeld(new ConveyorSpeed(.5));
-    buttonB.whileHeld(new IntakeSpeed(.5));
-    leftBumper.whileHeld(new ConveyorSpeed(-.7));
-    rightBumper.whenPressed(new SetShooterSpeed());
-    back.whileHeld(new ZeroNavX());
-    start.whenPressed(new AutoShoot(false));
+    buttonY.whileHeld(new ConveyorSpeed( conveyorT, .5));
+    buttonB.whileHeld(new IntakeSpeed(intake,.5));
+    leftBumper.whileHeld(new ConveyorSpeed( conveyorT, -.7));
+    rightBumper.whenPressed(new SetShooterSpeed(shooterMotor));
+    back.whileHeld(new ZeroNavX(swerveDriveSubsystem));
+    start.whenPressed(new AutoShoot(conveyorT, shooterMotor,false));
 
   }
 
@@ -178,7 +130,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //How can we change this to select the auto routine from the dashboard?
-    return new AutoPath1();
+    return new AutoPath1(swerveDriveSubsystem);
 
   }
 }

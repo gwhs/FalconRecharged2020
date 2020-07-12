@@ -10,7 +10,6 @@ package frc.robot.commands.controlpanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 
 public class SpinnerCommand extends CommandBase {
@@ -19,9 +18,10 @@ public class SpinnerCommand extends CommandBase {
    */
   private ColorPanelSpinner mColorPanelSpinner;
   private XboxController mXboxController;
-  public SpinnerCommand(ColorPanelSpinner cps) {
+  public SpinnerCommand(ColorPanelSpinner cps, XboxController operatorController) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mColorPanelSpinner = cps;
+    this.mXboxController = operatorController;
     addRequirements(mColorPanelSpinner);
   }
 
@@ -33,7 +33,6 @@ public class SpinnerCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mXboxController = RobotContainer.getContainer().getOperatorController();
     double rightTriggerSpeed = mXboxController.getTriggerAxis(Hand.kRight);
     double leftTriggerSpeed = mXboxController.getTriggerAxis(Hand.kLeft);
     if (leftTriggerSpeed >= 0.5 && rightTriggerSpeed <= 0.5)

@@ -8,7 +8,7 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ClimberTalon;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,10 +17,10 @@ public class SemiAutoPullUp extends SequentialCommandGroup {
   /**
    * Creates a new SemiAutoPullUp.
    */
-  public SemiAutoPullUp() {
+  public SemiAutoPullUp(ClimberTalon climberTalon) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new MoveBothClimberArms(-243000, RobotContainer.getContainer().getClimberT().getUpperArm(), RobotContainer.getContainer().getClimberT().getLowerArm()).withTimeout(4),
-          new ToggleClimberGearLock(RobotContainer.getContainer().getClimberT()));
+    super(new MoveBothClimberArms(climberTalon, -243000).withTimeout(4),
+          new ToggleClimberGearLock(climberTalon));
   }
 }

@@ -17,7 +17,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.commands.swervedrive.SwerveModuleCommand;
 import frc.robot.commands.swervedrive.Autonomous;
 
@@ -140,7 +139,6 @@ public class SwerveDriveModule extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        //setDefaultCommand(new SwerveModuleCommand(this));
     }
     
     public TalonSRX getAngleMotor() {
@@ -166,7 +164,7 @@ public class SwerveDriveModule extends SubsystemBase {
         return mDriveMotor;
     }
 
-    public void setTargetAngle(double targetAngle) {
+    public void setTargetAngle(double targetAngle, boolean isAuto) {
 
         mLastTargetAngle = targetAngle;
 
@@ -188,7 +186,7 @@ public class SwerveDriveModule extends SubsystemBase {
         } else if (delta < -180) {
             targetAngle -= 360;
         }
-        if (!RobotContainer.getContainer().getHolonomicDrivetrain().getIsAuto()) {
+        if (!isAuto) {
             
             delta = currentAngleMod - targetAngle;
             if (delta > 90 || delta < -90) {

@@ -7,19 +7,21 @@
 
 package frc.robot.commands.swervedrive;
 
-import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
 public class ZeroNavX extends InstantCommand {
 
-  public ZeroNavX() {
-    addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain());
+  private SwerveDriveSubsystem swerveDriveSubsystem;
+  public ZeroNavX(SwerveDriveSubsystem swerveDriveSubsystem) {
+    addRequirements(swerveDriveSubsystem);
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
   }
 
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
-    RobotContainer.getContainer().getHolonomicDrivetrain().resetAllEncoders();
+    swerveDriveSubsystem.zeroGyro();
+    swerveDriveSubsystem.resetAllEncoders();
   }
 
 }

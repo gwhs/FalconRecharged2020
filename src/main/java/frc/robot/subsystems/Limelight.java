@@ -8,15 +8,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-
-import java.util.ArrayList;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
 public class Limelight extends SubsystemBase  {
   /**
@@ -46,8 +44,9 @@ public class Limelight extends SubsystemBase  {
 
   private double prevXErr;
   private double prevRErr;
+  SwerveDriveSubsystem swerveDriveSubsystem;
 
-  public Limelight() {
+  public Limelight(SwerveDriveSubsystem swerveDriveSubsystem) {
     intakeX = inX.getDouble(0.0);
     intakeY = inY.getDouble(0.0);
     intakeA = inA.getDouble(0.0);
@@ -62,6 +61,7 @@ public class Limelight extends SubsystemBase  {
     rErr = Double.MIN_VALUE;
     prevXErr = Double.MIN_VALUE;
     prevRErr = Double.MIN_VALUE;
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
   }
 
   public void setIntakeCam(int x)
@@ -97,11 +97,11 @@ public class Limelight extends SubsystemBase  {
   // private double rkP = 0.0038;
     if(!isAligned())
     {
-      RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, strafe, rotation); 
+      swerveDriveSubsystem.holonomicDrive(0, strafe, rotation);
     }
     else
     {
-      RobotContainer.getContainer().getHolonomicDrivetrain().holonomicDrive(0, 0, 0); 
+      swerveDriveSubsystem.holonomicDrive(0, 0, 0);
     }
       
   }
@@ -128,7 +128,7 @@ public class Limelight extends SubsystemBase  {
 
   public double getAngleErr() {
     double angleErr;
-    double moddedGyro = (RobotContainer.getContainer().getHolonomicDrivetrain().getGyroAngle() % 360);
+    double moddedGyro = (swerveDriveSubsystem.getGyroAngle() % 360);
     if(moddedGyro < 0) {
       if(Math.abs((0 - moddedGyro - 360)) < Math.abs((0 - moddedGyro))) {
         angleErr = (0 - moddedGyro - 360);

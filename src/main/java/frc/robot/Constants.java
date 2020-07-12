@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-//import jdk.internal.jshell.tool.resources.l10n;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -49,19 +47,17 @@ public final class Constants {
     public static final double WHEEL_SIZE = 3.838;
 
     public static final double TICKS_PER_INCH = (2048*GEAR_RATIO)/(WHEEL_SIZE*Math.PI);
-    public static boolean forward = true;
+    public static final boolean forward = true;
     public static final double SPINNER_POSITION_PERCENT = .6;
     public static final double SPINNER_SPEED = 0.2; //only being used in SpinToMid right now
 
     public static final double MOD_TO_CENTER = 0.28575; // distance in meter from center point to each swerve module
 
+    public static final double maxAngleVelocity = 180;
+    public static final double maxAngleAcceleration = 360;
 
-    //to do: Make these final
-    public static double maxAngleVelocity = 180;
-    public static double maxAngleAcceleration = 360;
-
-    public static double turnTolerance = 0.5;
-    public static double anglePIDp = 0.0361;
-    public static double anglePIDi = 0.00;
-    public static double anglePIDd = 0.00237;
+    public static final double turnTolerance = 0.5;
+    public static final double anglePIDp = 0.0361;
+    public static final double anglePIDi = 0.00;
+    public static final double anglePIDd = 0.00237;
 }

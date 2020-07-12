@@ -3,19 +3,14 @@ package frc.robot.commands.swervedrive;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.*;
-import frc.robot.Constants;
-
-
-//import edu.wpi.first.wpilibj.examples.gyrodrivecommands.Constants.DriveConstants;
-//import edu.wpi.first.wpilibj.examples.gyrodrivecommands.subsystems.DriveSubsystem;
 
 
 /**
  * A command that will turn the robot to the specified angle.
  */
 public class GoToDistance extends ProfiledPIDCommand {
+    SwerveDriveSubsystem swerveDriveSubsystem;
     /**
      * Goes a specific distance.
      *
@@ -35,7 +30,7 @@ public class GoToDistance extends ProfiledPIDCommand {
         (output,setpoint) -> drive.holonomicDrive(output, 0, 0),
         // Require the drive
         drive);
-
+    swerveDriveSubsystem = drive;
     // Set the controller to be continuous (because it is an angle controller)
     //getController().enableContinuousInput(-180, 180);
     //drive.resetAllEncoders();
@@ -50,7 +45,7 @@ public class GoToDistance extends ProfiledPIDCommand {
     // TODO Auto-generated method stub
     super.execute();
     System.out.println("distance: " 
-        + RobotContainer.getContainer().getHolonomicDrivetrain().getInches());
+        + swerveDriveSubsystem.getInches());
   }
   @Override
   public boolean isFinished() {

@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.conveyor.ConveyorSpeed;
 import frc.robot.commands.conveyor.ToggleIgnore;
-import frc.robot.commands.intake.IntakeSpeed;
-import frc.robot.commands.intake.ToggleIntake;
+import frc.robot.subsystems.ConveyorTalon;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,14 +22,14 @@ public class AutoShoot extends SequentialCommandGroup {
   /**
    * Creates a new AutoShoot.
    */
-  public AutoShoot(boolean backConveyor) {
+  public AutoShoot(ConveyorTalon conveyorTalon, Shooter shooter, boolean backConveyor) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ToggleIgnore(true), 
-          backConveyor ? new ConveyorSpeed(.4).withTimeout(.4) : new WaitCommand(0), 
-          new ParallelCommandGroup(new SetShooterSpeed(6000), 
-                                   new SequentialCommandGroup(new WaitCommand(2), new ConveyorSpeed(-.6).withTimeout(3))).withTimeout(7),
-          new SetShooterSpeed(0).withTimeout(1),
-          new ToggleIgnore(false));
+    super(new ToggleIgnore(conveyorTalon, true),
+          backConveyor ? new ConveyorSpeed(conveyorTalon,.4).withTimeout(.4) : new WaitCommand(0),
+          new ParallelCommandGroup(new SetShooterSpeed(shooter, 6000),
+                                   new SequentialCommandGroup(new WaitCommand(2), new ConveyorSpeed(conveyorTalon,-.6).withTimeout(3))).withTimeout(7),
+          new SetShooterSpeed(shooter, 0).withTimeout(1),
+          new ToggleIgnore(conveyorTalon, false));
   }
 }

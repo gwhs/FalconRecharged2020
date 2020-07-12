@@ -8,21 +8,23 @@
 package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
 public class ToggleFieldOrientedCommand extends InstantCommand {
+  SwerveDriveSubsystem swerveDriveSubsystem;
   /**
    * Creates a new ToggleFieldOriented.
    */
-  public ToggleFieldOrientedCommand() {
+  public ToggleFieldOrientedCommand(SwerveDriveSubsystem swerveDriveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain());
+    addRequirements(swerveDriveSubsystem);
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getHolonomicDrivetrain().setFieldOriented(!RobotContainer.getContainer().getHolonomicDrivetrain().isFieldOriented());
+    swerveDriveSubsystem.setFieldOriented(!swerveDriveSubsystem.isFieldOriented());
   }
 
 }

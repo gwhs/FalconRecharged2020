@@ -5,7 +5,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
-import com.revrobotics.EncoderType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PIDController;
@@ -13,7 +12,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.controlpanel.SpinnerCommand;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -50,9 +48,6 @@ public class ColorPanelSpinner extends SubsystemBase {
         moto1.setSmartCurrentLimit(50);
         //moto1.setInverted(true);
         // encoder.setInverted(true);
-
-        setDefaultCommand(new SpinnerCommand(this));
-
     }
 
     public void setMotorSpeed (double speed){

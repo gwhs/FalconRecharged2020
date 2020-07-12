@@ -8,11 +8,13 @@
 package frc.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.robot.RobotContainer;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.Color.ColorSensor;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -31,10 +33,13 @@ public class SpinToColor extends CommandBase {
     private String color;
 
     private Map<String, String> impossible;
+    private ColorSensor colorSensor;
+    private ColorPanelSpinner colorPanelSpinner;
     
-    public SpinToColor() {
-        addRequirements(RobotContainer.getContainer().getColorSensor());   
-        addRequirements(RobotContainer.getContainer().getColorPanelSpinner());
+    public SpinToColor(ColorSensor colorSensor, ColorPanelSpinner colorPanelSpinner) {
+        addRequirements(colorSensor, colorPanelSpinner);
+        this.colorSensor = colorSensor;
+        this.colorPanelSpinner = colorPanelSpinner;
         //gameData = data;
         impossible = new HashMap<String, String>();
         impossible.put("Yellow", "Green");
@@ -47,7 +52,7 @@ public class SpinToColor extends CommandBase {
     @Override
     public void initialize() {
 
-        color = RobotContainer.getContainer().getColorSensor().getColor();
+        color = colorSensor.getColor();
         gameData =  DriverStation.getInstance().getGameSpecificMessage();
         targetColorArray = new String[]{"Yellow", "Red", "Green", "Blue"};
         arraySize = targetColorArray.length;
@@ -58,8 +63,6 @@ public class SpinToColor extends CommandBase {
         colorDictionary.put("Red", Integer.valueOf(1));
         colorDictionary.put("Green", Integer.valueOf(2));
         colorDictionary.put("Blue", Integer.valueOf(3));
-
-
 
         startColor = color;
         currentColor = color;
@@ -100,7 +103,7 @@ public class SpinToColor extends CommandBase {
     
         String wrongColor = impossible.get(currentColor);
 
-        String detected = RobotContainer.getContainer().getColorSensor().getColor();
+        String detected = colorSensor.getColor();
         if (!detected.equals(wrongColor)) {
         currentColor = detected;
         }
@@ -110,8 +113,8 @@ public class SpinToColor extends CommandBase {
     @Override
     public void execute() {
   
-        RobotContainer.getContainer().getColorPanelSpinner().spin(0.2); //change the speed
-        //currentColor = ((RobotContainer.getContainer().getColorSensor().getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
+        colorPanelSpinner.spin(0.2); //change the speed
+        //currentColor = ((colorSensor.getColor().equals("Green") && previousColor.equals("Blue")) ? "Blue" : RobotContainer.getContainer().getColorSensor().getColor());
         updateColor();
 
         SmartDashboard.putString("currentColor", currentColor);
@@ -129,14 +132,11 @@ public class SpinToColor extends CommandBase {
     @Override
     public boolean isFinished() {
         return currentColor.equals(targetColor);
-
-        
     }
 
     // Called once after isFinished returns true
     @Override
     public void end(final boolean interrupted) {
-
-        RobotContainer.getContainer().getColorPanelSpinner().spin(0);
+        colorPanelSpinner.spin(0);
     }
 }

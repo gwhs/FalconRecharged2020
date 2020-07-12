@@ -18,12 +18,8 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import javax.lang.model.util.ElementScanner6;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 import frc.robot.Constants;
 
@@ -45,9 +41,9 @@ public class Autonomous extends CommandBase {
   public static final double SPEEDCONSTANT = (2*Math.PI*(1.0/6)*0.3048)/19251; //used to swtich from ticks to meters
   public double initPos[];
 
-  public Autonomous(Trajectory trajectory, double angle) {  //what is the angle parameter here?
+  public Autonomous(SwerveDriveSubsystem swerveDriveSubsystem, Trajectory trajectory, double angle) {  //what is the angle parameter here?
     // Use addRequirements() here to declare subsystem dependencies.
-    drivetrain = RobotContainer.getContainer().getHolonomicDrivetrain();
+    drivetrain = swerveDriveSubsystem;
     this.trajectory = trajectory;
     addRequirements(drivetrain);
     time = new Timer();
@@ -93,14 +89,15 @@ public class Autonomous extends CommandBase {
     odometry = new SwerveDriveOdometry(kinematics,new Rotation2d(Math.toRadians(0)));
     odometry.resetPosition(new Pose2d(0, 0, new Rotation2d(0)), new Rotation2d(Math.toRadians(0)));
     time.start();
+    boolean isAuto = drivetrain.getIsAuto();
     drivetrain.setFieldOriented(false);
     drivetrain.setIsAuto(true);
     drivetrain.swapPIDSlot(1);
     drivetrain.swapDrivePIDSlot(1);
-    drivetrain.getSwerveModule(0).setTargetAngle(angle);
-    drivetrain.getSwerveModule(1).setTargetAngle(angle);
-    drivetrain.getSwerveModule(2).setTargetAngle(180+angle);  //what is up with this module?
-    drivetrain.getSwerveModule(3).setTargetAngle(angle);
+    drivetrain.getSwerveModule(0).setTargetAngle(angle, isAuto);
+    drivetrain.getSwerveModule(1).setTargetAngle(angle, isAuto);
+    drivetrain.getSwerveModule(2).setTargetAngle(180+angle, isAuto);  //what is up with this module?
+    drivetrain.getSwerveModule(3).setTargetAngle(angle, isAuto);
     drivetrain.getSwerveModule(0).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(1).getDriveMotor().setInverted(true);
     drivetrain.getSwerveModule(2).getDriveMotor().setInverted(true);
@@ -109,7 +106,7 @@ public class Autonomous extends CommandBase {
     initPos[1] = angle;
     initPos[2] = angle;
     initPos[3] = angle;
-    RobotContainer.getContainer().getHolonomicDrivetrain().zeroGyro();
+    drivetrain.zeroGyro();
     initGyro = drivetrain.getGyroAngle();
     SmartDashboard.putNumber("Init Gyro", initGyro);
 
@@ -133,15 +130,16 @@ public class Autonomous extends CommandBase {
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(adjustedSpeeds);
 
     //Instead of this, just pass the state to each module?
+    boolean isAuto = drivetrain.getIsAuto();
 
     drivetrain.getSwerveModule(0).setMeterSpeed(moduleStates[0].speedMetersPerSecond);
-    drivetrain.getSwerveModule(0).setTargetAngle(moduleStates[0].angle.getDegrees()+initPos[0]);
+    drivetrain.getSwerveModule(0).setTargetAngle(moduleStates[0].angle.getDegrees()+initPos[0], isAuto);
     drivetrain.getSwerveModule(1).setMeterSpeed(moduleStates[1].speedMetersPerSecond);
-    drivetrain.getSwerveModule(1).setTargetAngle(moduleStates[1].angle.getDegrees()+initPos[1]);
+    drivetrain.getSwerveModule(1).setTargetAngle(moduleStates[1].angle.getDegrees()+initPos[1], isAuto);
     drivetrain.getSwerveModule(2).setMeterSpeed(moduleStates[2].speedMetersPerSecond);
-    drivetrain.getSwerveModule(2).setTargetAngle(moduleStates[2].angle.getDegrees()+initPos[2]);
+    drivetrain.getSwerveModule(2).setTargetAngle(moduleStates[2].angle.getDegrees()+initPos[2], isAuto);
     drivetrain.getSwerveModule(3).setMeterSpeed(moduleStates[3].speedMetersPerSecond);
-    drivetrain.getSwerveModule(3).setTargetAngle(moduleStates[3].angle.getDegrees()+initPos[3]);
+    drivetrain.getSwerveModule(3).setTargetAngle(moduleStates[3].angle.getDegrees()+initPos[3], isAuto);
 
     SmartDashboard.putNumber("Speed 0", 10*drivetrain.getSwerveModule(0).getDriveMotor().getSelectedSensorVelocity()*SPEEDCONSTANT);
     SmartDashboard.putNumber("Angle 0 Expected", moduleStates[0].angle.getDegrees()+initPos[0]);

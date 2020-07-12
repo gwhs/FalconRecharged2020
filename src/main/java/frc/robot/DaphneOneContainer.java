@@ -20,9 +20,11 @@ import frc.robot.commands.climber.SemiAutoPullUp;
 import frc.robot.commands.climber.ToggleClimberGearLock;
 import frc.robot.commands.controlpanel.SpinToColor;
 import frc.robot.commands.controlpanel.SpinToMidColor;
+import frc.robot.commands.controlpanel.SpinnerCommand;
 import frc.robot.commands.conveyor.ConveyorSpeed;
 import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.intake.ToggleIntake;
+import frc.robot.commands.swervedrive.HolonomicDriveCommand;
 import frc.robot.commands.swervedrive.ZeroNavX;
 import frc.robot.subsystems.ClimberTalon;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
@@ -43,12 +45,9 @@ import frc.robot.subsystems.Shooter;
  */
 public class DaphneOneContainer {
   // The robot's subsystems and commands are defined here...
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final Command m_autoCommand = null;
   private XboxController mXboxController;
   private XboxController mXboxController2;
-  private static DaphneOneContainer theContainer;
   private SwerveDriveSubsystem swerveDriveSubsystem;
   private ColorPanelSpinner colorPanelSpinner;
   private ColorSensor colorSensor;
@@ -63,7 +62,6 @@ public class DaphneOneContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public DaphneOneContainer() {
-    theContainer = this;
     // Configure the button bindings
     SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(DaphneOneConstants.ANGLE1_TALON), new TalonFX(DaphneOneConstants.DRIVE1_TALON), 169); //2020: 70
     SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(DaphneOneConstants.ANGLE2_TALON), new TalonFX(DaphneOneConstants.DRIVE2_TALON), 176); //2020: 211
@@ -76,7 +74,7 @@ public class DaphneOneContainer {
 
     mXboxController = new XboxController(0);
     mXboxController2 = new XboxController(1);
-    limelight = new Limelight();
+    limelight = new Limelight(swerveDriveSubsystem);
     conveyor = new ConveyorTalon();
     intake = new Intake();
     shooter = new Shooter();
@@ -84,59 +82,11 @@ public class DaphneOneContainer {
     climber = new ClimberTalon();
 
     swerveDriveSubsystem.zeroGyro();
+    swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
+    colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
 //    shooter.setDefaultCommand(new SpinShooterMotor());
     configureButtonBindings();
   }
-
-  public Shooter getShooter() {
-    return shooter;
-  }
-
-  public ColorPanelSpinner getColorPanelSpinner() {
-    return colorPanelSpinner;
-  }
-
-  public ColorSensor getColorSensor() {
-    return colorSensor;
-  }
-
-  public SwerveDriveSubsystem getHolonomicDrivetrain() {
-    return swerveDriveSubsystem;
-  }
-
-  public XboxController getDriveController() {
-    return mXboxController;
-  }
-
-  public XboxController getClimbController() {
-    return mXboxController2;
-  }
-
-  public static DaphneOneContainer getContainer() {
-    return theContainer;
-
-  }
-
-  public Limelight getLimelight() {
-    return limelight;
-  }
-
-  public ConveyorTalon getConveyorT() {
-    return conveyor;
-  }
-
-  public Intake getIntake() {
-    return intake;
-  }
-
-  public Compressor getCompressor() {
-    return compressor;
-  }
-
-  public ClimberTalon getClimberT() {
-    return climber;
-  }
-
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -164,19 +114,19 @@ public class DaphneOneContainer {
     JoystickButton buttonBack_2 = new JoystickButton(mXboxController2, XboxController.Button.kBack.value);
     JoystickButton buttonStart_2 = new JoystickButton(mXboxController2, XboxController.Button.kStart.value);
     
-    buttonA.whenPressed(new ToggleIntake());
-    buttonB.whileHeld(new IntakeSpeed(-1));
-    buttonX.whileHeld(new IntakeSpeed(.5));
-    buttonY.whileHeld(new ConveyorSpeed(-.8));
-    buttonLB.whileHeld(new ConveyorSpeed(.5));
-    buttonBack.whenPressed(new ZeroNavX());
+    buttonA.whenPressed(new ToggleIntake(intake));
+    buttonB.whileHeld(new IntakeSpeed(intake,-1));
+    buttonX.whileHeld(new IntakeSpeed(intake,.5));
+    buttonY.whileHeld(new ConveyorSpeed(conveyor, -.8));
+    buttonLB.whileHeld(new ConveyorSpeed( conveyor,.5));
+    buttonBack.whenPressed(new ZeroNavX(swerveDriveSubsystem));
 
 
-    buttonB_2.whenPressed(new SemiAutoClimb());
-    buttonX_2.whenPressed(new SemiAutoPullUp());
+    buttonB_2.whenPressed(new SemiAutoClimb(climber));
+    buttonX_2.whenPressed(new SemiAutoPullUp(climber));
     buttonY_2.whenPressed(new ToggleClimberGearLock(climber));
-    buttonLB_2.whenPressed(new SpinToColor());
-    buttonBack_2.whenPressed(new SpinToMidColor()); //may b
+    buttonLB_2.whenPressed(new SpinToColor(colorSensor, colorPanelSpinner));
+    buttonBack_2.whenPressed(new SpinToMidColor(colorSensor, colorPanelSpinner));
     // buttonStart_2.
   }
 
@@ -187,7 +137,7 @@ public class DaphneOneContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoPath1();
+    return new AutoPath1(swerveDriveSubsystem);
 
   }
 

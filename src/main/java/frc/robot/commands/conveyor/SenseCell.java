@@ -8,16 +8,20 @@
 package frc.robot.commands.conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ConveyorTalon;
 
 public class SenseCell extends CommandBase {
   /**
    * Creates a new SenseCell.
    */
   private boolean seen;
-  public SenseCell() {
+
+  private ConveyorTalon conveyorTalon;
+
+  public SenseCell(ConveyorTalon conveyorTalon) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getConveyorT());
+    addRequirements(conveyorTalon);
+    this.conveyorTalon = conveyorTalon;
     seen = false;
   }
 
@@ -30,14 +34,14 @@ public class SenseCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    seen = RobotContainer.getContainer().getConveyorT().getStatus() && !RobotContainer.getContainer().getConveyorT().isIgnored();
+    seen = conveyorTalon.getStatus() && !conveyorTalon.isIgnored();
     if(seen)
     {
-      RobotContainer.getContainer().getConveyorT().setConveyorSpeed(-.5);
+      conveyorTalon.setConveyorSpeed(-.5);
     }
     else
     {
-      RobotContainer.getContainer().getConveyorT().setConveyorSpeed(0);
+      conveyorTalon.setConveyorSpeed(0);
     }
   }
 

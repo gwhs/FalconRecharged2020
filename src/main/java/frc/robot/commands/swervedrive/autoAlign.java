@@ -8,40 +8,45 @@
 package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+import frc.robot.subsystems.Limelight;
 
 public class autoAlign extends CommandBase {
+  private SwerveDriveSubsystem swerveDriveSubsystem;
+  private Limelight limelight;
   /**
    * Creates a new autoAlign.
    */
-  public autoAlign() {
+  public autoAlign(SwerveDriveSubsystem swerveDriveSubsystem, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.getContainer().getHolonomicDrivetrain(), RobotContainer.getContainer().getLimelight());
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
+    this.limelight = limelight;
+    addRequirements(swerveDriveSubsystem, limelight);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.getContainer().getLimelight().resetErrs();
-    RobotContainer.getContainer().getHolonomicDrivetrain().setFieldOriented(false);
+    limelight.resetErrs();
+    swerveDriveSubsystem.setFieldOriented(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.getContainer().getLimelight().align();
+    limelight.align();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.getContainer().getLimelight().resetErrs();
-    RobotContainer.getContainer().getHolonomicDrivetrain().setFieldOriented(true);
+    limelight.resetErrs();
+    swerveDriveSubsystem.setFieldOriented(true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.getContainer().getLimelight().isAligned();
+    return limelight.isAligned();
   }
 }
