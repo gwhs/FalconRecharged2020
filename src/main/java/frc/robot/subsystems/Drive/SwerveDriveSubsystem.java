@@ -1,10 +1,7 @@
 package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,10 +11,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	public SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 169); //real:390 practice: 212
-	public SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 176); //real:293 practice: 59
-	public SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 294); //real:298 practice: 56
-	public SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 27); //real: 355 practice: 190
 	private boolean isAuto;
 	
 	/*
@@ -30,10 +23,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 
 	public AHRS mNavX = new AHRS(SPI.Port.kMXP, (byte) 200);
 
-	public SwerveDriveSubsystem() {
-		initModules(this.m0, this.m1, this.m2, this.m3);
-	}
-
 	public SwerveDriveSubsystem(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { // add PID controll stuff for Drive Motors
 		initModules(m0, m1, m2, m3);
 	}
@@ -43,10 +32,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		mSwerveModules[1] = m1;
 		mSwerveModules[2] = m2;
 		mSwerveModules[3] = m3;
-		this.m0 = m0;
-		this.m1 = m1;
-		this.m2 = m2;
-		this.m3 = m3;
 		zeroGyro();
 
 		// mSwerveModules[0].getDriveMotor().setInverted(InvertType.InvertMotorOutput); //real: false
@@ -234,10 +219,10 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 3 Motor Inversion", mSwerveModules[3].getDriveMotor().getInverted());
-		SmartDashboard.putNumber("Mod 0 Angle", m0.getCurrentAngle());
-		SmartDashboard.putNumber("Mod 1 Angle", m1.getCurrentAngle());
-		SmartDashboard.putNumber("Mod 2 Angle", m2.getCurrentAngle());
-		SmartDashboard.putNumber("Mod 3 Angle", m3.getCurrentAngle());
+		SmartDashboard.putNumber("Mod 0 Angle", mSwerveModules[0].getCurrentAngle());
+		SmartDashboard.putNumber("Mod 1 Angle", mSwerveModules[1].getCurrentAngle());
+		SmartDashboard.putNumber("Mod 2 Angle", mSwerveModules[2].getCurrentAngle());
+		SmartDashboard.putNumber("Mod 3 Angle", mSwerveModules[3].getCurrentAngle());
 	}
 }
 

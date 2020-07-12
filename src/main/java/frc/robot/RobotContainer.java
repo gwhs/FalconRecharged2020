@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -25,6 +27,7 @@ import frc.robot.subsystems.ClimberTalon;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
 import frc.robot.subsystems.ConveyorTalon;
+import frc.robot.subsystems.Drive.SwerveDriveModule;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -58,7 +61,13 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-    swerveDriveSubsystem = new SwerveDriveSubsystem();
+
+    SwerveDriveModule m0 = new SwerveDriveModule(0, new TalonSRX(Constants.ANGLE2_TALON), new TalonFX(Constants.DRIVE2_TALON), 169); //real:390 practice: 212
+    SwerveDriveModule m1 = new SwerveDriveModule(1, new TalonSRX(Constants.ANGLE1_TALON), new TalonFX(Constants.DRIVE1_TALON), 176); //real:293 practice: 59
+    SwerveDriveModule m2 = new SwerveDriveModule(2, new TalonSRX(Constants.ANGLE3_TALON), new TalonFX(Constants.DRIVE3_TALON), 294); //real:298 practice: 56
+    SwerveDriveModule m3 = new SwerveDriveModule(3, new TalonSRX(Constants.ANGLE4_TALON), new TalonFX(Constants.DRIVE4_TALON), 27); //real: 355 practice: 190
+
+    swerveDriveSubsystem = new SwerveDriveSubsystem(m0, m1, m2, m3);
     swerveDriveSubsystem.zeroGyro();
     colorPanelSpinner = new ColorPanelSpinner();
     colorSensor = new ColorSensor();
