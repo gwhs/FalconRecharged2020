@@ -23,6 +23,9 @@ import frc.robot.utility.TrajectoryMaker;
 public class AutoPath1 extends SequentialCommandGroup {
   /**
    * Creates a new AutoPath1.
+   * 
+   * 
+   * This is just an Auto used for general testing. 
    */
   public AutoPath1() {  // test forward path
    

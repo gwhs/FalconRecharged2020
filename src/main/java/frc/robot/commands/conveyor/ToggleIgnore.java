@@ -15,6 +15,13 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ToggleIgnore extends InstantCommand {
+  /**
+   * This command is used to control whether or not the conveyer will move the power cells when a cell is sensed.
+   * 
+   * This command is used for backing up power cells when preparing to shoot power cells into the power port. 
+   * 
+   * 
+   */
   private String toggle;
   public ToggleIgnore(boolean b) {
     // Use addRequirements() here to declare subsystem dependencies.

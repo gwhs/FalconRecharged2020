@@ -20,6 +20,9 @@ import frc.robot.utility.TrajectoryMaker;
 public class AutoLineToAutoScore extends SequentialCommandGroup {
   /**
    * Creates a new AutoDelayToScore.
+   * 
+   * This Auto moves the robot from the initiation line to the power port and
+   * then automatically shoots all of the power cells inside the robot.
    */
   public AutoLineToAutoScore() {
     TrajectoryMaker trajMaker = RobotContainer.getContainer().createToPortPath();

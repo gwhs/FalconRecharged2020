@@ -20,6 +20,11 @@ import frc.robot.commands.swervedrive.Autonomous;
 public class AutoScoreFrontToTrench extends SequentialCommandGroup {
   /**
    * Creates a new AutoScoreFrontToTrench.
+   * 
+   * A test Auto for phase 1 robot. 
+   * 
+   * The Robot starts at the initiation line, dumps the 3 power cells inside the robot,
+   * moves to the front of the trench, and picks up the 3 power cells at the trench.
    */
   public AutoScoreFrontToTrench() {
     // Add your commands in the super() call, e.g.

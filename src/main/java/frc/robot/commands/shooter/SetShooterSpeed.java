@@ -16,6 +16,10 @@ import frc.robot.subsystems.Shooter;
 public class SetShooterSpeed extends CommandBase {
   /**
    * Creates a new SetShooterSpeed.
+   * 
+   * Sets the Speed of the Shooter.
+   * speed is in RPM
+   * 
    */
   private double speed; 
   private Shooter shooter;

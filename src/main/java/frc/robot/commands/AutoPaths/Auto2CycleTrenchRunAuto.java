@@ -24,9 +24,19 @@ public class Auto2CycleTrenchRunAuto extends SequentialCommandGroup {
    * Creates a new Auto2CycleTrenchRunAuto.
    */
   public Auto2CycleTrenchRunAuto() {
-    // Start at Initiation Line
-    // This is all theoretical code with no actual field measurements. 
-    // MAKE SURE TO MEASURE AND SWAP VALUES BEFORE TESTING - Kyle
+    /**
+     * This is an attempt at a 2 Cycle Auto for phase 2 robot.
+     * The Robot starts at the initiation line.
+     * 
+     * This is all theoretical code with no actual field measurements.
+     * The code needs to be worked on because this of rotation and movement problems.
+     * Also, many of the inidividual paths in this "2 Cycle Auto" treat the robot as a tankdrive,
+     * and some changes can be made to use our swerve drives to our advantage.
+     * 
+     * MAKE SURE TO MEASURE AND SWAP VALUES BEFORE TESTING - Kyle
+     * 
+     */
+
 
     TrajectoryMaker traj = RobotContainer.getContainer().createToPortPath();
     TrajectoryMaker trajTrench = RobotContainer.getContainer().createTargetToFrontOfTrench();
