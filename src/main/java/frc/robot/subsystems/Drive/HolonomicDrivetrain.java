@@ -1,19 +1,31 @@
 package frc.robot.subsystems.Drive;
 
-public abstract class HolonomicDrivetrain extends Drivetrain {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+public abstract class HolonomicDrivetrain extends SubsystemBase {
+
+
+	private double speedMultiplier = 1;
 	private double mAdjustmentAngle = 0;
 	private boolean mFieldOriented = true;
-
-	public double getAdjustmentAngle() {
-		return mAdjustmentAngle;
-	}
 
 	public abstract double getGyroAngle();
 
 	public abstract void holonomicDrive(double forward, double strafe, double rotation);
 
 	public abstract void swapPIDSlot(int slot);
+
+	public double getAdjustmentAngle() {
+		return mAdjustmentAngle;
+	}
+
+	public double getSpeedMultiplier() {
+		return speedMultiplier;
+	}
+
+	public void setSpeedMultiplier(double speedMultiplier) {
+		this.speedMultiplier = speedMultiplier;
+	}
 
 	public boolean isFieldOriented() {
 		return mFieldOriented;
