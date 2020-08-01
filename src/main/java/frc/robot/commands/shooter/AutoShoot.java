@@ -21,6 +21,16 @@ import frc.robot.subsystems.Shooter;
 public class AutoShoot extends SequentialCommandGroup {
   /**
    * Creates a new AutoShoot.
+   * 
+   * Auto Shoots all of the power cells in the robot with the call of one command.
+   * 
+   * First, it moves power cells back, away from the shooter to prevent jamming,
+   * and revs the shooter. Next, the conveyer moves the cells and the shooter shoots!
+   * ToggleIgnore used to prevent sensor from moving power cells.
+   * 
+   * Rev-ing the shooter allows the shooter flywheel to start at a greater speed so that when 
+   * power cells shoot for real, less time is required for the flywheel to be at the desired speed.
+   * 
    */
   public AutoShoot(ConveyorTalon conveyorTalon, Shooter shooter, boolean backConveyor) {
     // Add your commands in the super() call, e.g.

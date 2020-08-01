@@ -13,6 +13,12 @@ import frc.robot.subsystems.Intake;
 public class IntakeSpeed extends CommandBase {
   /**
    * Creates a new IntakeSpeed.
+   * 
+   * Sets the speed of the wheels on the intake arm.
+   * 
+   * SPEED VALUES: Negative(-) = intake, Positive(+) = push power cells away.
+   * Note: Please check this^ just in case. Can't make sure because I don't have robot. - Kyle
+   * 
    */
   private double speed;
   Intake intake;

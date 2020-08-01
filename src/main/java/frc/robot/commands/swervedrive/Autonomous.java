@@ -27,6 +27,9 @@ import frc.robot.Constants;
 public class Autonomous extends CommandBase {
   /**
    * Creates a new Autonomous.
+   * 
+   * Contains the code for Autonomous. Includes setup for Trajectory, odometry, kinematics. 
+   * 
    */
   private RamseteController controller;
   private Trajectory trajectory;

@@ -15,6 +15,13 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ToggleIntake extends InstantCommand {
   private Intake intake;
+  
+  /**
+   * 
+   * Used to toggle the intake arm. 
+   * Calling this command changes between the intake arm's up position, and its down position(when it can intake).
+   * 
+   */
   public ToggleIntake(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;

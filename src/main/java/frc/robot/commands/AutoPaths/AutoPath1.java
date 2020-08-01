@@ -18,6 +18,9 @@ import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 public class AutoPath1 extends SequentialCommandGroup {
   /**
    * Creates a new AutoPath1.
+   * 
+   * 
+   * This is just an Auto used for general testing. 
    */
   public AutoPath1(SwerveDriveSubsystem swerveDriveSubsystem) {  // test forward path
    
