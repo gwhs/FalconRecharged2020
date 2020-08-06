@@ -20,7 +20,7 @@ import frc.robot.commands.climber.SemiAutoPullUp;
 import frc.robot.commands.climber.ToggleClimberGearLock;
 import frc.robot.commands.controlpanel.SpinToColor;
 import frc.robot.commands.controlpanel.SpinToMidColor;
-import frc.robot.commands.controlpanel.SpinnerCommand;
+//import frc.robot.commands.controlpanel.SpinnerCommand;
 import frc.robot.commands.conveyor.ConveyorSpeed;
 import frc.robot.commands.intake.IntakeSpeed;
 import frc.robot.commands.intake.ToggleIntake;
@@ -83,7 +83,7 @@ public class DaphneOneContainer {
 
     // setup any default commands
     swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
-    colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
+    //colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
     //shooter.setDefaultCommand(new SpinShooterMotor());
 
     // configure the buttons

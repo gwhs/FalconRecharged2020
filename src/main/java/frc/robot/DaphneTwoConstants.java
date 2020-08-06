@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Units;
+
 /**
  * DaphneTwoConstants provides a convenient place for to hold robot-specific numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -24,4 +26,9 @@ public final class DaphneTwoConstants {
     public static final int DRIVE2_TALON = 2;
     public static final int DRIVE3_TALON = 6;
     public static final int DRIVE4_TALON = 4;
+
+    public static final double LL_HEIGHT = 23; //inches
+    public static final double LL_MOUNT_ANGLE = 50; //degrees
+    public static final double VISION_TARGET_HEIGHT = 90;  //inches
+
 }

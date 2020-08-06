@@ -48,8 +48,15 @@ public final class Constants {
     public static final double MAX_ANGLE_VELOCITY = 180;
     public static final double MAX_ANGLE_ACCELERATION = 360;
 
+    public static final double MAX_DISTANCE_VELOCITY = 24; //24 inches per second
+    public static final double MAX_DISTANCE_ACCELERATION = 48;
+    public static final double DISTANCE_TOLERANCE = 6;  //inches
+    public static final double DISTANCE_PID_P = 0.03;
+    public static final double DISTANCE_PID_I = 0.00;
+    public static final double DISTANCE_PID_D = 0.00237;
+
     public static final double TURN_TOLERANCE = 0.5;
-    public static final double ANGLE_PID_P = 0.0361;
-    public static final double ANGLE_PID_I = 0.00;
+    public static final double ANGLE_PID_P = 0.04;
+    public static final double ANGLE_PID_I = 0.001;
     public static final double ANGLE_PID_D = 0.00237;
 }

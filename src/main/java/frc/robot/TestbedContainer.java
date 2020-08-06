@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.controlpanel.SpinToColor;
-import frc.robot.commands.controlpanel.SpinnerCommand;
+//import frc.robot.commands.controlpanel.SpinnerCommand;
 import frc.robot.subsystems.Color.ColorPanelSpinner;
 import frc.robot.subsystems.Color.ColorSensor;
 
@@ -43,7 +43,7 @@ public class TestbedContainer {
     mXboxController2 = new XboxController(1);
 
     // setup any default commands
-    colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
+    //colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
 
     // configure the buttons
     configureButtonBindings();

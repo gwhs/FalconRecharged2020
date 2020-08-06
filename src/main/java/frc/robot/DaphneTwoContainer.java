@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.commands.ReadLimelight;
+
 import frc.robot.commands.AutoPaths.AutoPath1;
 import frc.robot.commands.climber.*;
-import frc.robot.commands.controlpanel.SpinnerCommand;
+//import frc.robot.commands.controlpanel.SpinnerCommand;
 import frc.robot.commands.conveyor.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.AutoShoot;
@@ -30,6 +33,7 @@ import frc.robot.subsystems.ConveyorTalon;
 import frc.robot.subsystems.Drive.SwerveDriveModule;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LimelightPortal;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 
@@ -55,6 +59,7 @@ public class DaphneTwoContainer {
   private final Shooter shooterMotor;
   private final Compressor compressor;
   private final ClimberTalon climberT;
+  private final LimelightPortal limeL;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -76,6 +81,7 @@ public class DaphneTwoContainer {
     shooterMotor = new Shooter();
     compressor = new Compressor();
     climberT = new ClimberTalon();
+    limeL = new LimelightPortal();
 
     // create the input controllers
     mXboxController = new XboxController(0);
@@ -83,7 +89,7 @@ public class DaphneTwoContainer {
 
     // setup any default commands
     swerveDriveSubsystem.setDefaultCommand(new HolonomicDriveCommand(swerveDriveSubsystem, mXboxController));
-    colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
+    //colorPanelSpinner.setDefaultCommand(new SpinnerCommand(colorPanelSpinner, mXboxController2));
     conveyorT.setDefaultCommand(new SenseCell(conveyorT));
     climberT.setDefaultCommand(new ClimberArmSpeed(climberT, mXboxController2));
 
@@ -130,7 +136,12 @@ public class DaphneTwoContainer {
     leftBumper.whileHeld(new ConveyorSpeed( conveyorT, -.7));
     rightBumper.whenPressed(new SetShooterSpeed(shooterMotor));
     back.whileHeld(new ZeroNavX(swerveDriveSubsystem));
-    start.whenPressed(new AutoShoot(conveyorT, shooterMotor,false));
+    //start.whenPressed(new AutoShoot(conveyorT, shooterMotor,false));
+    //start.whileHeld(new ReadLimelight(limeL));
+    //start.whenPressed(new RotateWithLimelight(limeL, swerveDriveSubsystem));
+    //start.whenPressed(new TurnToZeroLimelight(0, swerveDriveSubsystem, limeL));
+    //start.whenPressed(new TurnToAngleProfiled(12, swerveDriveSubsystem));
+    start.whenPressed(new AlignToTargetLimelight( swerveDriveSubsystem, limeL));
   }
 
 
