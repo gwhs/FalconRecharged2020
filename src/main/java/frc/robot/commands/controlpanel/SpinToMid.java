@@ -14,8 +14,8 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Color.ColorPanelSpinner;
-import frc.robot.subsystems.Color.ColorSensor;
+import frc.robot.subsystems.color.ColorPanelSpinner;
+import frc.robot.subsystems.color.ColorSensor;
 
 /**
  * rbb: This command is broken - the initialize command has while loops that might not end

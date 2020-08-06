@@ -12,8 +12,8 @@ import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Color.ColorPanelSpinner;
-import frc.robot.subsystems.Color.ColorSensor;
+import frc.robot.subsystems.color.ColorPanelSpinner;
+import frc.robot.subsystems.color.ColorSensor;
 
 import java.util.Map;
 import java.util.HashMap;

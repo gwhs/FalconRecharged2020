@@ -5,12 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.AutoPaths;
+package frc.robot.commands.autoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.TrajectoryHelper;
 import frc.robot.commands.swervedrive.Autonomous;
-import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+import frc.robot.subsystems.drive.SwerveDriveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

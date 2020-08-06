@@ -10,7 +10,7 @@ package frc.robot.commands.controlpanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Color.ColorPanelSpinner;
+import frc.robot.subsystems.color.ColorPanelSpinner;
 
 public class SpinnerCommand extends CommandBase {
   /**

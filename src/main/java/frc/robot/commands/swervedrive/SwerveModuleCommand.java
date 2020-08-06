@@ -8,7 +8,7 @@
 package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drive.SwerveDriveModule;
+import frc.robot.subsystems.drive.SwerveDriveModule;
 
 public class SwerveModuleCommand extends CommandBase {
   private SwerveDriveModule mDriveModule;

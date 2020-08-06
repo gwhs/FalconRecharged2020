@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.controlpanel.SpinToColor;
 import frc.robot.commands.controlpanel.SpinnerCommand;
-import frc.robot.subsystems.Color.ColorPanelSpinner;
-import frc.robot.subsystems.Color.ColorSensor;
+import frc.robot.subsystems.color.ColorPanelSpinner;
+import frc.robot.subsystems.color.ColorSensor;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

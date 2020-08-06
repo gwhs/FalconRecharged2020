@@ -8,8 +8,8 @@
 package frc.robot.commands.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Color.ColorPanelSpinner;
-import frc.robot.subsystems.Color.ColorSensor;
+import frc.robot.subsystems.color.ColorPanelSpinner;
+import frc.robot.subsystems.color.ColorSensor;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

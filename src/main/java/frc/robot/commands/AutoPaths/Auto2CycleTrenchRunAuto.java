@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.AutoPaths;
+package frc.robot.commands.autoPaths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.TrajectoryHelper;
@@ -14,7 +14,7 @@ import frc.robot.commands.shooter.AutoShoot;
 import frc.robot.commands.swervedrive.AutoRotate;
 import frc.robot.commands.swervedrive.Autonomous;
 import frc.robot.subsystems.ConveyorTalon;
-import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+import frc.robot.subsystems.drive.SwerveDriveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utility.TrajectoryMaker;

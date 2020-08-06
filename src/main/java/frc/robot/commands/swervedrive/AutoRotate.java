@@ -9,7 +9,7 @@ package frc.robot.commands.swervedrive;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+import frc.robot.subsystems.drive.SwerveDriveSubsystem;
 
 public class AutoRotate extends CommandBase {
   /**
