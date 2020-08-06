@@ -5,14 +5,26 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwise - is counter clockwise test commit 2 electric bugaloo
+public class SwerveDriveSubsystem extends SubsystemBase { // + is clockwise - is counter clockwise 
 	private static final double WHEELBASE = 22.5; 
 	private static final double TRACKWIDTH = 22.5;
 	private static final double RATIO = Math.sqrt(Math.pow(WHEELBASE, 2) + Math.pow(TRACKWIDTH, 2));
-	private boolean isAuto;
+
+	private double speedMultiplier = 1; // used to directly control proportional speed control
+	private double mAdjustmentAngle = 0;
+	private boolean mFieldOriented = true;
 	
+	/*
+	 * while true, robot will be controlled based on the orientation of the field regardless of robot orientation 
+	 * (forward on joystick will always move robot forward on the field) 
+	 * while false, robot will be controlled based on the orientation of the robot
+	 * (forward on joystick will move robot in the direction that it is currently facing)
+	 */
+
+	private boolean isAuto;
 	/*
 	 * 0 is Front Right
 	 * 1 is Front Left
@@ -23,23 +35,17 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 
 	public AHRS mNavX = new AHRS(SPI.Port.kMXP, (byte) 200);
 
-	public SwerveDriveSubsystem(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { // add PID controll stuff for Drive Motors
+	public SwerveDriveSubsystem(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { 
 		initModules(m0, m1, m2, m3);
 	}
 
-	private void initModules(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { // add PID controll stuff for Drive Motors
+	private void initModules(SwerveDriveModule m0, SwerveDriveModule m1, SwerveDriveModule m2, SwerveDriveModule m3) { 
 		mSwerveModules[0] = m0;
 		mSwerveModules[1] = m1;
 		mSwerveModules[2] = m2;
 		mSwerveModules[3] = m3;
 		zeroGyro();
 
-		// mSwerveModules[0].getDriveMotor().setInverted(InvertType.InvertMotorOutput); //real: false
-		// mSwerveModules[2].getDriveMotor().setInverted(true); //
-		// mSwerveModules[1].getDriveMotor().setInverted(false); //real: true
-		// mSwerveModules[2].getDriveMotor().setInverted(false); //real: false
-		//mSwerveModules[3].getDriveMotor().setInverted(TalonFXInvertType.CounterClockwise); //real: false
-		
 		 mSwerveModules[0].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[2].getAngleMotor().setInverted(true); //real: true
 		 mSwerveModules[1].getAngleMotor().setInverted(true); //real: true
@@ -55,6 +61,26 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 
 	public AHRS getNavX() {
 		return mNavX;
+	}
+
+	public double getAdjustmentAngle() {
+		return mAdjustmentAngle;
+	}
+
+	public void setSpeedMultiplier(double speedMultiplier) {
+		this.speedMultiplier = speedMultiplier;
+	}
+
+	public boolean isFieldOriented() {
+		return mFieldOriented;
+	}	
+
+	public void setAdjustmentAngle(double adjustmentAngle) {
+		mAdjustmentAngle = adjustmentAngle;
+	}
+
+	public void setFieldOriented(boolean fieldOriented) {
+		mFieldOriented = fieldOriented;
 	}
 
 	public double getGyroAngle() {
@@ -87,11 +113,12 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 	public SwerveDriveModule getSwerveModule(int i) {
 		return mSwerveModules[i];
 	}
+	//Main method for driving the robot where each parameter moves the robot in its respected direction using inverse kinematics (complicated math that we dont understand).
+	// 
 
-	@Override
-	public void holonomicDrive(double forward, double strafe, double rotation) {
-		forward *= getSpeedMultiplier();
-		strafe *= getSpeedMultiplier();
+	public void holonomicDrive(double forward, double strafe, double rotation) {  
+		forward *= speedMultiplier;
+		strafe *= speedMultiplier;
 		if (isFieldOriented()) {
 			
 			double angleRad = Math.toRadians(getGyroAngle());
@@ -133,7 +160,7 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 			}
 		}
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {  
 			if (Math.abs(forward) > 0.05 ||
 			    Math.abs(strafe) > 0.05 ||
 			    Math.abs(rotation) > 0.05) {
@@ -145,7 +172,6 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		}
 	}
 
-	@Override
 	public void stopDriveMotors() {
 		for (SwerveDriveModule module : mSwerveModules) {
 			module.setTargetSpeed(0);
@@ -213,8 +239,12 @@ public class SwerveDriveSubsystem extends HolonomicDrivetrain { // + is clockwis
 		isAuto = is;
 	}
 
+	public void zeroGyro() {
+		setAdjustmentAngle(getGyroAngle() + getAdjustmentAngle());
+	}
+
 	@Override 
-	public void periodic() { //is this needed here?
+	public void periodic() { 
 		SmartDashboard.putBoolean("Mod 0 Motor Inversion", mSwerveModules[0].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 1 Motor Inversion", mSwerveModules[1].getDriveMotor().getInverted());
 		SmartDashboard.putBoolean("Mod 2 Motor Inversion", mSwerveModules[2].getDriveMotor().getInverted());

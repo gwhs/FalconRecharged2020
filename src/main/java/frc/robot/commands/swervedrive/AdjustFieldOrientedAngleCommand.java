@@ -1,16 +1,15 @@
 package frc.robot.commands.swervedrive;
 
-import frc.robot.subsystems.Drive.HolonomicDrivetrain;
-
+import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AdjustFieldOrientedAngleCommand extends CommandBase {
 	public static final double ADJUSTMENT_AMOUNT = 5;
 
-	private final HolonomicDrivetrain mDrivetrain;
+	private final SwerveDriveSubsystem mDrivetrain;
 	private final boolean mIncreaseAngle;
 
-	public AdjustFieldOrientedAngleCommand(HolonomicDrivetrain drivetrain, boolean increaseAngle) {
+	public AdjustFieldOrientedAngleCommand(SwerveDriveSubsystem drivetrain, boolean increaseAngle) {
 		mDrivetrain = drivetrain;
 		mIncreaseAngle = increaseAngle;
 	}
