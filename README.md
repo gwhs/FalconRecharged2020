@@ -33,6 +33,7 @@
                     import frc.robot.utility.TrajectoryMaker;
                     import frc.robot.commands.swervedrive.Autonomous;
                     import frc.robot.subsystems.Drive.SwerveDriveSubsystem;
+                    
             vii. add any inputs to the class declaration that may be required:
                     ex. swerveDriveSubsystem or shooter or intake
 
@@ -93,10 +94,10 @@
 
                     new Autonomous(SwerveDriveSubsystem swerveDriveSubsystem, Trajectory trajectory, double angle)
 
-                - for the swerveDriveSubsystem, just use "swerveDriveSubsystem"
-                - for the Trajectory, use the TrajectoryMaker local variable with the getTrajectory() method 
-                - for the angle, use the TrajectoryMaker local variable with the getAngle() method
-                - you can use more than one autonomous command in one command group
+                1. for the swerveDriveSubsystem, just use "swerveDriveSubsystem"
+                2. for the Trajectory, use the TrajectoryMaker local variable with the getTrajectory() method 
+                3. for the angle, use the TrajectoryMaker local variable with the getAngle() method
+                4. you can use more than one autonomous command in one command group
 
 
 
