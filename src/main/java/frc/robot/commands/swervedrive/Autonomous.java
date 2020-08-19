@@ -44,7 +44,7 @@ public class Autonomous extends CommandBase {
   public static final double SPEEDCONSTANT = (2*Math.PI*(1.0/6)*0.3048)/19251; //used to swtich from ticks to meters
   public double initPos[];
 
-  public Autonomous(SwerveDriveSubsystem swerveDriveSubsystem, Trajectory trajectory, double angle) {  //what is the angle parameter here?
+  public Autonomous(SwerveDriveSubsystem swerveDriveSubsystem, Trajectory trajectory, double angle) {  // angle- the angle the robot will travel in
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = swerveDriveSubsystem;
     this.trajectory = trajectory;

@@ -16,21 +16,21 @@
   ###### How to create a new Autonomous Path
     
     1. Create a New AutoPath in [java \ frc \ robot \ commands \ AutoPaths]
-            i. Right Click "AutoPaths" on the left explorer bar
-            ii. Click Create a new Class/Command
-            iii. Type in and/or select "SequentialCommandGroup (New)"
-            iv. Enter a name for your new AutoPath
-            v. Replace the reference to the super consutructor( super(); ) with addCommands();
+            1. Right Click "AutoPaths" on the left explorer bar
+            2. Click Create a new Class/Command
+            3. Type in and/or select "SequentialCommandGroup (New)"
+            4. Enter a name for your new AutoPath
+            5. Replace the reference to the super consutructor( super(); ) with addCommands();
                 1. This allows you to add many commands for the Robot to follow,
                   including many sequential AutoPaths or tasks such as 
                   picking up power cells, etc...
                 2. The change from super(); to addCommands(); was decided after
                   the Autonomous Software Group ran in to various problems with super();
     2. Go to TrajectoryHelper.java to set up a new TrajectoryMaker
-            i. *note* Each TrajectoryMaker has a Trajectory Instance Variable that can get accessed
+            1. *note* Each TrajectoryMaker has a Trajectory Instance Variable that can get accessed
               using the method getTrajectory()
-            ii. As implied by the name TrajectoryMaker, the class makes the trajectory for you
-            iii. Set up a new Trajectory Maker using the following format:
+            2. As implied by the name TrajectoryMaker, the class makes the trajectory for you
+            3. Set up a new Trajectory Maker using the following format:
             
                     public static TrajectoryMaker trajMakerName()
                     {
@@ -38,7 +38,7 @@
                         return new TrajectoryMaker(*look at the following steps to pick a constructor);
                     }
                     
-            iv. There are 2 Types of TrajectoryMakers(2 different constructors)
+            - There are 2 Types of TrajectoryMakers(2 different constructors)
                 1. The First type of TrajectoryMaker allows the Robot to move a distance in any direction.
                 
                         public TrajectoryMaker(Pose2d start, Pose2d end, boolean isHyp)
@@ -59,12 +59,13 @@
                             points.add(new Translation2d(x, y));
                         - x and y should be in METERS
                     - add points before returning the TrajectoryMaker
-            v. Start and End Points are Pose2d Objects
-                1. Pose2d Objects can be created with the following inputs:
+            - Start and End Points are Pose2d Objects
+                - Pose2d Objects can be created with the following inputs:
                         new Pose2d(double x, double y, Rotation2d rotation)
-                2. the x and y inputs for Pose2d need to be entered in METERS
-                3. Angle is inputed using a Rotation2d object, which can be created using:
+                - the x and y inputs for Pose2d need to be entered in METERS
+                - Angle is inputed using a Rotation2d object, which can be created using:
                         new Rotation2d(angleInRadians)
+    3.
                 
 
 

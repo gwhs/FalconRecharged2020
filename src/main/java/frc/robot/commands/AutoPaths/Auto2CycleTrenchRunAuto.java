@@ -44,7 +44,6 @@ public class Auto2CycleTrenchRunAuto extends SequentialCommandGroup {
      * 
      */
 
-
     TrajectoryMaker traj = TrajectoryHelper.createToPortPath();
     TrajectoryMaker trajTrench = TrajectoryHelper.createTargetToFrontOfTrench();
     TrajectoryMaker trajTrenchForward = TrajectoryHelper.createTrenchForward();
