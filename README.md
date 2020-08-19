@@ -76,6 +76,7 @@
                 2. the x and y inputs for Pose2d need to be entered in METERS
                 3. Angle is inputed using a Rotation2d object, which can be created using:
                         new Rotation2d(angleInRadians)
+                        
     3. Go to AutoPaths and create Local Variables for TrajectoryMaker to make the code easier to 
        read and debug(place on top of addCommands();)
             i. An example of a local variable TrajectoryMaker *traj* for 
