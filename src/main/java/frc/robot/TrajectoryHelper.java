@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TrajectoryHelper {
 
     // Need better documentation here.  What are these doing?  Are the units in meters?
-    public static TrajectoryMaker createfrontScorePath()
+        public static TrajectoryMaker createfrontScorePath()
     {
         return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
     }
@@ -41,13 +41,15 @@ public class TrajectoryHelper {
         return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0.25, 0, new Rotation2d(0)), true);//3
     }
 
-    public static TrajectoryMaker createPortToFrontofTrench()
-    {
-        ArrayList<Translation2d> points = new ArrayList<Translation2d>();
-        points.add(new Translation2d(-1.5, 2.3));
-        points.add(new Translation2d(-3, 2.3));
-        return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
-    }
+    // Fix this TrajectoryMaker before using or delete, 180 radians???
+    // public static TrajectoryMaker createPortToFrontofTrench()
+    // {
+    //     ArrayList<Translation2d> points = new ArrayList<Translation2d>();
+    //     points.add(new Translation2d(-1.5, 2.3));
+    //     points.add(new Translation2d(-3, 2.3));
+    //     return new TrajectoryMaker(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-5.3, 2.3, new Rotation2d(180)), points );
+    // }
+
     public static TrajectoryMaker createMoveDownTrench()
     {
         return new TrajectoryMaker(new Pose2d(0,0,new Rotation2d(0)), new Pose2d(3, 0, new Rotation2d(0)), true);
