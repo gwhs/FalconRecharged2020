@@ -2,6 +2,11 @@
 
 *Work in Progress*
 
+---Software To Do List
+
+  - Create a toRadians() method to take a degree input and returns the angle in Radians(for AutoPaths)
+        -to be used in TrajectoryHelper.java
+
 ---General Information
 
 
@@ -25,12 +30,41 @@
             - *note* Each TrajectoryMaker has a Trajectory Instance Variable that can get accessed
               using the method getTrajectory()
             - As implied by the name TrajectoryMaker, the class makes the trajectory for you
+            - Set up a new Trajectory Maker using the following format:
+
+                    public static TrajectoryMaker trajMakerName()
+                    {
+                        //Add ArrayList and points here if necessary
+                        return new TrajectoryMaker(*look at the following steps to pick a constructor);
+                    }
+
             - There are 2 Types of TrajectoryMakers(2 different constructors)
                 1. The First type of TrajectoryMaker allows the Robot to move a distance in any direction.
+
+                        public TrajectoryMaker(Pose2d start, Pose2d end, boolean isHyp)
+
                     - Moves in a straight line from starting point to end point
                     - uses Pose2d start, Pose2d end, boolean isHyp as inputs
                     - If using this constructor, set isHyp to true, setting it to false may not move the robot or may produce unknown results.
+
                 2. The Second type of TrajectoryMaker uses the SwerveDrives as if it was a TankDrive(as if the wheels cannot rotate)
+
+                        public TrajectoryMaker(Pose2d start, Pose2d end, ArrayList<Translation2d> points)
+
                     - Moves from start to end point without rotating wheels
                     - uses Pose2d start, Pose2d end, and an ArrayList of Translation2d Objects as points
                     - does not require isHyp input because it is set to false by default for this constructor.
+                    - add points to an ArrayList using:
+                            points.add(new Translation2d(x, y));
+                        - x and y should be in METERS
+                    - add points before returning the TrajectoryMaker
+
+            - Start and End Points are Pose2d Objects
+                - Pose2d Objects can be created with the following inputs:
+                        new Pose2d(double x, double y, Rotation2d rotation)
+                - the x and y inputs for Pose2d need to be entered in METERS
+                - Angle is inputed using a Rotation2d object, which can be created using:
+                        new Rotation2d(angleInRadians)
+                
+
+
